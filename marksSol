@@ -1,0 +1,17 @@
+let marks = [45, 89, 98, 76, 37, 96, 65, 78, 94, 35];
+let passCount = 0;
+
+for(let i = 0; i < marks.length; i++) {
+    if(marks[i] < 40)
+        marks[i] += 20;
+    else if(marks[i] > 90)
+        marks[i] = 90;
+}
+
+for(let i = 0; i < marks.length; i++) {
+    if(marks[i] >= 50)
+        passCount++;
+}
+
+console.log(marks);
+console.log("Number of students passed:", passCount);
