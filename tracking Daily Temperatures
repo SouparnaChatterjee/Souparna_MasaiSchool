@@ -1,0 +1,4 @@
+//Manipulation: Tracking Daily Temperatures
+temp=[17,18,19,20,15,17,18];
+temp[3]=temp[3]+2;
+console.log(temp)
