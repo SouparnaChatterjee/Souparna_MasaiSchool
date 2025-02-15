@@ -1,0 +1,13 @@
+for(let i = 0; i < 5; i++) {
+    if(i == 0 || i == 4) {
+        // First and last row: print 5 stars
+        let bag = "";
+        for(let j = 0; j < 5; j++) {
+            bag += "* ";
+        }
+        console.log(bag);
+    } else {
+        // Middle rows: print 1 star
+        console.log("*");
+    }
+}
