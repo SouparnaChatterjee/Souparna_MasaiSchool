@@ -1,0 +1,14 @@
+function sumOfIndices(arr) {
+    for (let i = 0; i < arr.length; i++) {
+        let row = '';
+        for (let j = 0; j < arr[0].length; j++) {
+            row += (i + j) + ' ';
+        }
+        
+        console.log(row.trim());
+    }
+   
+}
+
+const arr = [[1,2],[3,4],[5,6]];
+sumOfIndices(arr);
