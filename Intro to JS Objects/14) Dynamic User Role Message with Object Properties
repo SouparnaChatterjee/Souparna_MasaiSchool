@@ -1,0 +1,23 @@
+function checkUser(user) {
+    return (user.role === "admin") 
+        ? (user.active ? "Admin Access Granted!" : "Admin Access Revoked")
+        : (user.role === "user") 
+        ? (user.active ? "User Access Granted!" : "User Access Revoked")
+        : "Access Denied";
+}
+
+function getUserInput() {
+    let name = prompt("Please enter your name:");
+    let role = prompt("Enter role (user/admin/manager):");
+    let active = prompt("Is user active? (true/false)").toLowerCase() === 'true';
+
+    let user = {
+        name: name,
+        role: role,
+        active: active
+    };
+
+    return user;
+}
+let user = getUserInput();
+console.log(`${user.name}: ${checkUser(user)}`);
