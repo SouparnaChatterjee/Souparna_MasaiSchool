@@ -1,36 +1,57 @@
-function zigzagTraversal(matrix)
-{
-  if(!matrix||matrix.length===0)
-  return [];
-  const n=matrix.length;
-  const m=matrix[0].length;
-  let res=[];
-  for(let i=0;i<n;i++)
-  {
-    if(i%2===0)
-    {
-      for(let j=m-1;j>=0;j--)
-      {
-        res.push(matrix[i][j]);
+function zigZagTraversal(matrix) {
+  if (!matrix || matrix.length === 0) return "";
+  
+  const rows = matrix.length;
+  const cols = matrix[0].length;
+  let result = "";
+  
+  // Start from top-right corner
+  let row = 0;
+  let col = cols - 1;
+  
+  // First move left across the top row
+  while (col >= 0) {
+    result += matrix[row][col] + " ";
+    col--;
+  }
+  
+  // Now we're at the top-left corner, move to the next row
+  row = 1;
+  col = 0;
+  let goingRight = true;
+  
+  // Process remaining rows
+  while (row < rows) {
+    if (goingRight) {
+      // Move right across the current row
+      while (col < cols) {
+        result += matrix[row][col] + " ";
+        col++;
       }
-    }
-    else
-    {
-      
-      for(let j=0;j<m;j++)
-      {
-        res.push(matrix[i][j]);
+      col--; // Adjust after going out of bounds
+    } else {
+      // Move left across the current row
+      while (col >= 0) {
+        result += matrix[row][col] + " ";
+        col--;
       }
+      col++;
     }
     
+    row++; 
+    goingRight = !goingRight; 
   }
-  return res.join(' ');
+  
+  return result.trim();
 }
 
-const matrix=[
-  [1,2,3,4,5],
-  [6,7,8,9,10],
-  [3,2,5,4,6],
-  [7,8,9,1,2]
-  ];
-  console.log(zigzagTraversal(matrix));
+const testMatrix = [
+  [1, 2, 3, 4, 5],
+  [6, 7, 8, 9, 1],
+  [3, 2, 5, 4, 6],
+  [7, 8, 9, 1, 2]
+];
+
+console.log(zigZagTraversal(testMatrix));
+// Output: 5 4 3 2 1 6 7 8 9 1 6 4 5 2 3 7 8 9 1 2
+
