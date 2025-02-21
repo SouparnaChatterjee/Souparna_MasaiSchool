@@ -1,0 +1,27 @@
+function findGradeForStudentScores()
+{
+    for (let studentName in studentScores)
+    {
+        let score=studentScores[studentName];
+        let grade;
+        if (score >= 90) {
+            grade = "A";
+        } else if (score >= 80 && score < 90) {
+            grade = "B";
+        } else if (score >= 70 && score < 80) {
+            grade = "C";
+        } else if (score >= 60 && score < 70) {
+            grade = "D";
+        } else {
+            grade = "F";
+        }
+    console.log(studentName+" - "+grade);
+    }
+}
+let studentScores = {
+        Souparna: parseInt(prompt("Enter Souparna's score:")),
+        Shiwani: parseInt(prompt("Enter Shiwani's score:")),
+        Daksh: parseInt(prompt("Enter Daksh's score:")),
+        Aishi: parseInt(prompt("Enter Aishi's score:"))
+    };
+findGradeForStudentScores(studentScores);
