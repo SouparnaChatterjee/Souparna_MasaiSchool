@@ -1,0 +1,68 @@
+function determineAccessPrivilege(person) {
+    return person.role === "admin" 
+        ? (person.active 
+            ? (person.experience > 5 
+                ? (person.department === "IT" 
+                    ? "Full IT Admin Access" 
+                    : "Full General Admin Access")
+                : "Limited Admin Access")
+            : "Admin Access Revoked")
+        : person.role === "manager"
+        ? (person.active
+            ? (person.experience > 3
+                ? (person.department === "Sales"
+                    ? "Full Sales Manager Access"
+                    : "Full Manager Access")
+                : "Limited Manager Access")
+            : "Manager Access Revoked")
+        : person.role === "user"
+        ? (person.active
+            ? (person.department === "Support"
+                ? "Priority Support Access"
+                : "User Access")
+            : "User Access Revoked")
+        : "Invalid Role";
+}
+
+// Input function with validation
+function getUserInput() {
+    let role, experience, active, department;
+
+    // Role input
+    do {
+        role = prompt("Enter role (admin/manager/user):").toLowerCase().trim();
+    } while (!["admin", "manager", "user"].includes(role));
+
+    // Experience input
+    do {
+        experience = parseFloat(prompt("Enter years of experience:"));
+    } while (isNaN(experience) || experience < 0);
+
+    // Active status input
+    do {
+        active = prompt("Is user active? (true/false)").toLowerCase().trim();
+    } while (!["true", "false"].includes(active));
+
+    // Department input
+    department = prompt("Enter department:");
+
+    return {
+        role: role,
+        experience: experience,
+        active: active === 'true',
+        department: department
+    };
+}
+
+function main() {
+    let person = getUserInput();
+    let accessPrivilege = determineAccessPrivilege(person);
+    
+    console.log("User Details:");
+    console.log(`Role: ${person.role}`);
+    console.log(`Experience: ${person.experience} years`);
+    console.log(`Active Status: ${person.active}`);
+    console.log(`Department: ${person.department}`);
+    console.log(`Access Privilege: ${accessPrivilege}`);
+}
+main();
