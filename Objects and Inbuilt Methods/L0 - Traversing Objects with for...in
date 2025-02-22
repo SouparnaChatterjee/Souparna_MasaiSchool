@@ -1,0 +1,11 @@
+const readline = require('readline-sync');
+
+let book = {
+    title: readline.question("Enter the title of the book: "),
+    author: readline.question("Enter the author of the book: "),
+    year: Number(readline.question("Enter the year the book was published: "))
+};
+
+for(let key in book) {
+    console.log(key + ": " + book[key]);
+}
