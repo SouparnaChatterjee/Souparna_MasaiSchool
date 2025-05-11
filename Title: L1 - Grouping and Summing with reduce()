@@ -1,0 +1,26 @@
+// Function to count category occurrences
+function countCategories(categories) {
+    return categories.reduce((acc, category) => {
+        // If category exists, increment count, else initialize to 1
+        acc[category] = (acc[category] || 0) + 1;
+        return acc;
+    }, {});
+}
+
+// Function for extra challenge - sort categories by count
+function sortCategoriesByCount(categoryCount) {
+    return Object.entries(categoryCount)
+        .sort(([, a], [, b]) => b - a)
+        .map(([category]) => category);
+}
+
+// Test data
+const products = ["electronics", "clothing", "electronics", "toys", "clothing", "toys", "toys"];
+
+// Get category counts
+const result = countCategories(products);
+console.log(result); // { electronics: 2, clothing: 2, toys: 3 }
+
+// Get sorted categories (extra challenge)
+const sortedCategories = sortCategoriesByCount(result);
+console.log(sortedCategories); // ["toys", "electronics", "clothing"]
