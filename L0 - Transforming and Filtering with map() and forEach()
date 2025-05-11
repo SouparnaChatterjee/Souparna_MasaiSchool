@@ -1,0 +1,15 @@
+function processProducts(products) {
+  
+    products.forEach(product => {
+        const priceMessage = product.price > 50 ? "above" : "below";
+        console.log(`${product.name} is ${priceMessage} $50`);
+    });
+}
+
+// Test with given input
+const products = [
+    { name: "Laptop", price: 1000 },
+    { name: "Mouse", price: 20 }
+];
+
+processProducts(products);
