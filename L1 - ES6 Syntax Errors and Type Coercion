@@ -1,0 +1,30 @@
+const checkout = {
+    items: [],
+    total: 0,
+
+    addItem(item) {
+        // Convert price to number and validate
+        const price = Number(item.price);
+        
+        if (typeof price !== 'number' || isNaN(price)) {
+            console.log("Invalid price.");
+            return;
+        }
+
+        this.items.push({
+            name: item.name,
+            price: price
+        });
+        
+        this.total += price;
+    },
+
+    getTotal() {
+        return `Total: $${parseFloat(this.total).toFixed(2)}`;
+    }
+};
+
+// Test cases
+checkout.addItem({ name: "Coffee Maker", price: "99.95" });
+checkout.addItem({ name: "Milk", price: 3.50 });
+console.log(checkout.getTotal());
