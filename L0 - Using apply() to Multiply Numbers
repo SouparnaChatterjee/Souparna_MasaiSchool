@@ -1,0 +1,12 @@
+function multiply(a, b) {
+    return a * b;
+}
+function multiplyNumbers(num1, num2) {
+    // Using apply() to call multiply function
+    return multiply.apply(null, [num1, num2]);
+}
+
+// Test cases
+console.log(multiplyNumbers(4, 5));  // Output: 20
+console.log(multiplyNumbers(2, 3));  // Output: 6
+console.log(multiplyNumbers(-2, 5)); // Output: -10
