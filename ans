@@ -1,0 +1,20 @@
+function manageStudents() {
+    let students = ["Alice", "Bob", "Charlie"];
+    students.splice(1, 0, "David");
+    console.log(students.includes("Eve"));
+    console.log(students.join(","));
+}
+
+function testManageStudents() {
+    console.log("Test Case 1:");
+    manageStudents();
+
+    console.log("\nTest Case 2:");
+    let students = ["Alice", "Bob", "Charlie"];
+    students.splice(students.length, 0, "Eve");
+    console.log(students.join(","));
+    console.log(students.includes("Eve"));
+}
+
+// Call the test function
+testManageStudents();
