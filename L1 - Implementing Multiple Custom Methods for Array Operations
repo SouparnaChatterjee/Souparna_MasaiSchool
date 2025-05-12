@@ -1,0 +1,30 @@
+
+function filterEvenNumbers(arr) {
+    return arr.filter(num => num % 2 === 0);
+}
+function sumOfArray(arr) {
+    return arr.reduce((acc, curr) => acc + curr, 0);
+}
+function sortAndConcat(arr1, arr2) {
+    const sorted1 = [...arr1].sort((a, b) => a - b);
+    const sorted2 = [...arr2].sort((a, b) => a - b);
+    return sorted1.concat(sorted2);
+}
+const arr1 = [5, 12, 7, 20, 3];
+const arr2 = [15, 8, 2, 10];
+const evenArr1 = filterEvenNumbers(arr1);
+const evenArr2 = filterEvenNumbers(arr2);
+
+const sumArr1 = sumOfArray(arr1);
+const sumArr2 = sumOfArray(arr2);
+
+const mergedSorted = sortAndConcat(arr1, arr2);
+
+// Output
+console.log("Even numbers in arr1:", evenArr1);
+console.log("Even numbers in arr2:", evenArr2);
+
+console.log("Sum of arr1:", sumArr1);
+console.log("Sum of arr2:", sumArr2);
+
+console.log("Sorted and concatenated array:", mergedSorted);
