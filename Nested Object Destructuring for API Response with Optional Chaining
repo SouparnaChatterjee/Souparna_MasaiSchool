@@ -1,0 +1,28 @@
+const getUserInfo = (user) => {
+  const { id, profile } = user;
+  const name = profile?.name ?? "Information not available";
+  const city = profile?.address?.city ?? "Information not available";
+  const zipcode = profile?.address?.zipcode ?? "Information not available";
+
+  return `User ${name} (ID: ${id}) lives in ${city} (ZIP: ${zipcode})`;
+};
+const user1 = {
+  id: 123,
+  profile: {
+    name: "John Doe",
+    address: {
+      city: "Los Angeles",
+      zipcode: "90001"
+    }
+  }
+};
+
+const user2 = {
+  id: 123,
+  profile: {
+    name: "John Doe"
+  }
+};
+
+console.log(getUserInfo(user1));
+console.log(getUserInfo(user2));
