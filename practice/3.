@@ -1,0 +1,20 @@
+function manageStudents(students, nameToAdd, indexToAdd, nameToSearch) {
+  students.splice(indexToAdd, 0, nameToAdd);
+  console.log(students.includes(nameToSearch));
+  console.log(students.join(","));
+}
+
+// Test Case 1
+manageStudents(["Alice", "Bob", "Charlie"], "David", 1, "Eve");
+
+// Test Case 2
+manageStudents(["Alice", "Bob", "Charlie"], "Eve", 2, "Eve");
+
+// Test Case 3
+manageStudents(["Tom", "Jerry"], "Spike", 0, "Jerry");
+
+// Test Case 4
+manageStudents([], "Zara", 0, "Zara");
+
+// Test Case 5
+manageStudents(["A", "B", "C"], "X", 3, "X");
