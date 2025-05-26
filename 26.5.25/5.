@@ -1,0 +1,38 @@
+
+function startTask() {
+  return new Promise((resolve, reject) => {
+    setTimeout(() => {
+      resolve("Task A completed");
+    }, 1000); // 1 second
+  });
+}
+
+function processTask(taskAOutput) {
+  return new Promise((resolve, reject) => {
+    setTimeout(() => {
+      resolve(`Task B processed: ${taskAOutput}`);
+    }, 1500); // 1.5 seconds
+  });
+}
+function finalizeTask(taskBOutput) {
+  return new Promise((resolve, reject) => {
+    setTimeout(() => {
+      resolve(`Final result: ${taskBOutput}`);
+    }, 500); // 0.5 seconds
+  });
+}
+startTask()
+  .then((resultA) => {
+    console.log(resultA); // Task A completed
+    return processTask(resultA);
+  })
+  .then((resultB) => {
+    console.log(resultB); // Task B processed: Task A completed
+    return finalizeTask(resultB);
+  })
+  .then((finalResult) => {
+    console.log(finalResult); // Final result: Task B processed: Task A completed
+  })
+  .catch((error) => {
+    console.error("An error occurred:", error);
+  });
