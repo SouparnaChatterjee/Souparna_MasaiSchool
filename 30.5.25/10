@@ -1,0 +1,68 @@
+function Car(make, model, year, type, isAvailable = true) {
+  this.make = make;
+  this.model = model;
+  this.year = year;
+  this.type = type;
+  this.isAvailable = isAvailable;
+}
+
+function Customer(name) {
+  this.name = name;
+  this.rentedCars = [];
+}
+
+Customer.prototype.rentCar = function (car) {
+  if (car.isAvailable) {
+    car.isAvailable = false;
+    this.rentedCars.push(car);
+    console.log(`${this.name} rented ${car.make} ${car.model}`);
+  } else {
+    console.log(`${car.make} ${car.model} is already rented.`);
+  }
+};
+
+Customer.prototype.returnCar = function (car) {
+  const index = this.rentedCars.indexOf(car);
+  if (index > -1) {
+    setTimeout(() => {
+      car.isAvailable = true;
+      this.rentedCars.splice(index, 1);
+      console.log(`${this.name} returned ${car.make} ${car.model}`);
+    }, 2000);
+  }
+};
+
+function PremiumCustomer(name, discountRate) {
+  Customer.call(this, name);
+  this.discountRate = discountRate;
+}
+
+PremiumCustomer.prototype = Object.create(Customer.prototype);
+PremiumCustomer.prototype.constructor = PremiumCustomer;
+
+function calculateRentalPrice(car, days, isPremium, discountRate) {
+  let baseRate = 50;
+  let typeMultiplier = 1;
+
+  if (car.type === "SUV") typeMultiplier = 1.5;
+  else if (car.type === "Sedan") typeMultiplier = 1.2;
+
+  let total = baseRate * typeMultiplier * days;
+
+  if (isPremium) {
+    total = total * (1 - discountRate);
+  }
+
+  return total.toFixed(2);
+}
+
+function Maintenance(car, delay) {
+  setTimeout(function () {
+    car.isAvailable = true;
+    console.log(`${car.make} ${car.model} is now available after maintenance.`);
+  }, delay);
+}
+
+// Cars
+const car1 = new Car("Toyota", "Corolla", 2020, "Sedan");
+const car2 = new Car("Ford", "Explorer", 2
