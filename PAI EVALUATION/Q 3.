@@ -33,7 +33,7 @@ function generateInsights(data)
     const totalPopulation=data.reduce((sum,country)=>sum+country.population,0);
     const avgPopulation=Math.round(totalPopulation/countryCount);
     //now i'm tryingg to get top 5 country by population....
-    const top5ByPopulation=data.sort((a,b)=>b.population-a.population).slice(0,5).map(country=>country.name.toLowerCase());
+    const top5ByPopulation=data.sort((a,b)=>b.population-a.population).slice(0,5).map(country=>country.name);
   const populationByContinent=data.reduce((acc,country)=>
   {
       acc[country.region]=(acc[country.region]||0)+country.population;
@@ -47,7 +47,7 @@ function generateInsights(data)
   
   const densestCountries=countriesWithDensity.slice(0,3);
   //now i will find the least 5 in terms of area
-  const lowAreaCountries=data.sort((a,b)=>a.area-b.area).slice(0,5).map(country=>country.name.toLowerCase());
+  const lowAreaCountries=data.sort((a,b)=>a.area-b.area).slice(0,5).map(country=>country.name);
   return{
       countryCount: countryCount,
       avgPopulation: avgPopulation,
