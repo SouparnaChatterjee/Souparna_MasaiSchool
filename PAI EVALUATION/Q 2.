@@ -1,0 +1,44 @@
+//i will create permissions matrix
+const CONST_PERMISSIONS={
+    superadmin: ['users', 'settings', 'logs'],
+    member: ['users', 'logs']
+};
+//now, function to close over role and checking access via permissions
+function initAccess(role)
+{
+    return function canView(feature)
+    {
+        return CONST_PERMISSIONS[role] && CONST_PERMISSIONS[role].includes(feature);//role has to exist as well as have access to feauture
+    };
+}
+function displayAccess(feature)
+{
+    const hasAccess=CONST_PERMISSIONS[this.role] && CONST_PERMISSIONS[this.role].includes(feature);
+    if(hasAccess)
+    {
+        console.log(`${this.role} can access ${feature}`); return true;
+    }
+    else
+    {
+        console.log(`${this.role} cannot access ${feature}`); return false;
+    }
+}
+
+const saAccess=initAccess("superadmin")
+console.log(saAccess("settings"));
+const user={role:"member"};
+const memberMessage=displayAccess.bind(user);//reusable fxn//using bind
+memberMessage("users");
+memberMessage("settings");
+const adminUser={role:"superadmin"};
+displayAccess.call(adminUser, "logs");
+displayAccess.call(user, "logs");
+//Error handling
+const invalidAccess=initAccess("guest");
+console.log("guest accessing users:", invalidAccess("users"));
+try{
+    displayAccess.call({role:"guest"}, "settings");
+} catch(error)
+{
+    console.log("Error:", error.message);
+}
