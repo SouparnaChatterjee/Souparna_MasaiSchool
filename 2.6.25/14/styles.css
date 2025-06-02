@@ -1,0 +1,6 @@
+/* External CSS targeting the div with id="main-container" */
+#main-container {
+  padding: 20px;
+  border: 1px solid #ccc;
+  background-color: #e6e6e6;
+}
