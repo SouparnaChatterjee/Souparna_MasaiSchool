@@ -1,0 +1,31 @@
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: #333;
+  padding: 10px 20px;
+  flex-wrap: nowrap;
+}
+
+.logo {
+  color: white;
+  font-size: 24px;
+}
+
+.links {
+  display: flex;
+  flex-direction: row;
+  gap: 20px;
+}
+
+.links a {
+  text-decoration: none;
+  color: white;
+  padding: 5px 10px;
+  transition: background 0.3s;
+}
+
+.links a:hover {
+  background-color: #555;
+  border-radius: 4px;
+}
