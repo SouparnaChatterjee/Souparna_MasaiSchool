@@ -1,0 +1,8 @@
+Changed .links from column to row direction.
+
+Removed unnecessary flex-wrap that caused items to wrap.
+
+Used space-between to align logo and links properly.
+
+Added gap for consistent spacing between links.
+
