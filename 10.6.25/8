@@ -1,0 +1,288 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Masai Calculator</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Arial', sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .calculator {
+            background: white;
+            border-radius: 20px;
+            padding: 30px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+            max-width: 400px;
+            width: 100%;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .header h1 {
+            color: #2c3e50;
+            font-size: 2.5rem;
+            font-weight: 300;
+            margin-bottom: 10px;
+        }
+
+        .display {
+            background: #f8f9fa;
+            border: 2px solid #e9ecef;
+            border-radius: 10px;
+            padding: 20px;
+            margin-bottom: 20px;
+            text-align: right;
+            font-size: 2rem;
+            font-weight: bold;
+            color: #2c3e50;
+            min-height: 80px;
+            display: flex;
+            align-items: center;
+            justify-content: flex-end;
+        }
+
+        .buttons {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            grid-template-rows: repeat(4, 1fr);
+            gap: 15px;
+            margin-top: 20px;
+        }
+
+        .btn {
+            border: none;
+            border-radius: 15px;
+            font-size: 1.5rem;
+            font-weight: bold;
+            height: 70px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            outline: none;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        /* Number buttons */
+        .btn.number {
+            background: #ffffff;
+            color: #2c3e50;
+            border: 2px solid #e9ecef;
+        }
+
+        .btn.number:hover {
+            background: #3498db;
+            color: white;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 12px rgba(52, 152, 219, 0.3);
+        }
+
+        /* Operator buttons */
+        .btn.operator {
+            background: #34495e;
+            color: white;
+        }
+
+        .btn.operator:hover {
+            background: #e74c3c;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 12px rgba(231, 76, 60, 0.3);
+        }
+
+        /* Clear button */
+        .btn.clear {
+            background: #e74c3c;
+            color: white;
+        }
+
+        .btn.clear:hover {
+            background: #c0392b;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 12px rgba(192, 57, 43, 0.3);
+        }
+
+        /* Equals button */
+        .btn.equals {
+            background: #27ae60;
+            color: white;
+        }
+
+        .btn.equals:hover {
+            background: #229954;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 12px rgba(39, 174, 96, 0.3);
+        }
+
+        .btn:active {
+            transform: translateY(0);
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+        }
+
+        /* Grid positioning for specific buttons */
+        .btn[data-value="0"] {
+            grid-column: span 2;
+        }
+
+        @media (max-width: 480px) {
+            .calculator {
+                padding: 20px;
+            }
+            
+            .header h1 {
+                font-size: 2rem;
+            }
+            
+            .btn {
+                height: 60px;
+                font-size: 1.3rem;
+            }
+            
+            .display {
+                font-size: 1.5rem;
+                min-height: 60px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="calculator">
+        <div class="header">
+            <h1>Masai Calculator</h1>
+        </div>
+        
+        <div class="display" id="display">0</div>
+        
+        <div class="buttons">
+            <button class="btn clear" onclick="clearDisplay()">C</button>
+            <button class="btn operator" onclick="appendToDisplay('/')" data-value="/">÷</button>
+            <button class="btn operator" onclick="appendToDisplay('*')" data-value="*">×</button>
+            <button class="btn operator" onclick="deleteLast()" data-value="delete">⌫</button>
+            
+            <button class="btn number" onclick="appendToDisplay('7')" data-value="7">7</button>
+            <button class="btn number" onclick="appendToDisplay('8')" data-value="8">8</button>
+            <button class="btn number" onclick="appendToDisplay('9')" data-value="9">9</button>
+            <button class="btn operator" onclick="appendToDisplay('-')" data-value="-">-</button>
+            
+            <button class="btn number" onclick="appendToDisplay('4')" data-value="4">4</button>
+            <button class="btn number" onclick="appendToDisplay('5')" data-value="5">5</button>
+            <button class="btn number" onclick="appendToDisplay('6')" data-value="6">6</button>
+            <button class="btn operator" onclick="appendToDisplay('+')" data-value="+">+</button>
+            
+            <button class="btn number" onclick="appendToDisplay('1')" data-value="1">1</button>
+            <button class="btn number" onclick="appendToDisplay('2')" data-value="2">2</button>
+            <button class="btn number" onclick="appendToDisplay('3')" data-value="3">3</button>
+            <button class="btn equals" onclick="calculate()" rowspan="2">=</button>
+            
+            <button class="btn number" onclick="appendToDisplay('0')" data-value="0">0</button>
+            <button class="btn number" onclick="appendToDisplay('.')" data-value=".">.</button>
+        </div>
+    </div>
+
+    <script>
+        let display = document.getElementById('display');
+        let currentInput = '0';
+        let shouldResetDisplay = false;
+
+        function updateDisplay() {
+            display.textContent = currentInput;
+        }
+
+        function clearDisplay() {
+            currentInput = '0';
+            shouldResetDisplay = false;
+            updateDisplay();
+        }
+
+        function deleteLast() {
+            if (currentInput.length > 1) {
+                currentInput = currentInput.slice(0, -1);
+            } else {
+                currentInput = '0';
+            }
+            updateDisplay();
+        }
+
+        function appendToDisplay(value) {
+            if (shouldResetDisplay) {
+                currentInput = '';
+                shouldResetDisplay = false;
+            }
+
+            if (currentInput === '0' && value !== '.') {
+                currentInput = value;
+            } else {
+                // Prevent multiple operators in a row
+                const lastChar = currentInput[currentInput.length - 1];
+                const operators = ['+', '-', '*', '/'];
+                
+                if (operators.includes(value) && operators.includes(lastChar)) {
+                    currentInput = currentInput.slice(0, -1) + value;
+                } else {
+                    currentInput += value;
+                }
+            }
+            
+            updateDisplay();
+        }
+
+        function calculate() {
+            try {
+                // Replace display operators with JS operators
+                let expression = currentInput.replace(/×/g, '*').replace(/÷/g, '/');
+                let result = eval(expression);
+                
+                // Handle division by zero and other errors
+                if (!isFinite(result)) {
+                    currentInput = 'Error';
+                } else {
+                    currentInput = result.toString();
+                }
+                
+                shouldResetDisplay = true;
+                updateDisplay();
+            } catch (error) {
+                currentInput = 'Error';
+                shouldResetDisplay = true;
+                updateDisplay();
+            }
+        }
+
+        // Keyboard support
+        document.addEventListener('keydown', function(event) {
+            const key = event.key;
+            
+            if (key >= '0' && key <= '9' || key === '.') {
+                appendToDisplay(key);
+            } else if (key === '+' || key === '-') {
+                appendToDisplay(key);
+            } else if (key === '*') {
+                appendToDisplay('*');
+            } else if (key === '/') {
+                event.preventDefault();
+                appendToDisplay('/');
+            } else if (key === 'Enter' || key === '=') {
+                calculate();
+            } else if (key === 'Escape' || key === 'c' || key === 'C') {
+                clearDisplay();
+            } else if (key === 'Backspace') {
+                deleteLast();
+            }
+        });
+    </script>
+</body>
+</html>
