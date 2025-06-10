@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Masai School - Strategic Investors</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background-color: #f8f9fa;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: white;
+            padding: 40px;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+
+
+
+        h1 {
+            text-align: center;
+            font-size: 28px;
+            color: #333;
+            margin-bottom: 40px;
+            font-weight: 600;
+        }
+
+        .investor-card {
+            text-align: center;
+        }
+
+        .investor-image {
+            width: 120px;
+            height: 140px;
+            background: #e9ecef;
+            border-radius: 8px;
+            margin: 0 auto 15px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .investor-image::before {
+            content: '';
+            position: absolute;
+            top: 30px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 60px;
+            height: 60px;
+            background: #ccc;
+            border-radius: 50%;
+        }
+
+        .investor-image::after {
+            content: '';
+            position: absolute;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80px;
+            height: 40px;
+            background: #bbb;
+            border-radius: 20px 20px 0 0;
+        }
+
+        .investor-name {
+            font-weight: 600;
+            color: #333;
+            margin-bottom: 5px;
+            font-size: 14px;
+        }
+
+        .investor-title {
+            font-size: 12px;
+            color: #666;
+            margin-bottom: 8px;
+        }
+
+        .company-logo {
+            height: 20px;
+            background: #007bff;
+            border-radius: 3px;
+            margin: 0 auto;
+            width: 60px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 10px;
+            font-weight: bold;
+        }
+
+
+
+        /* Specific styling for different rows */
+        .investors-grid .investor-card:nth-child(1) .company-logo { background: #ff6b35; }
+        .investors-grid .investor-card:nth-child(2) .company-logo { background: #333; }
+        .investors-grid .investor-card:nth-child(3) .company-logo { background: #007bff; }
+        .investors-grid .investor-card:nth-child(4) .company-logo { background: #17a2b8; }
+        .investors-grid .investor-card:nth-child(5) .company-logo { background: #6f42c1; }
+        .investors-grid .investor-card:nth-child(6) .company-logo { background: #fd7e14; }
+        .investors-grid .investor-card:nth-child(7) .company-logo { background: #20c997; }
+        .investors-grid .investor-card:nth-child(8) .company-logo { background: #6c757d; }
+
+
+
+        @media (max-width: 768px) {
+            .investors-grid {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 20px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .investors-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Strategic Investors</h1>
+
+        <div class="investors-grid">
+            <div class="investor-card">
+                <div class="investor-image"></div>
+                <div class="investor-name">Vijay Shekhar Sharma</div>
+                <div class="investor-title">Founder & CEO</div>
+                <div class="company-logo">PAYTM</div>
+            </div>
+            
+            <div class="investor-card">
+                <div class="investor-image"></div>
+                <div class="investor-name">Kunal Shah</div>
+                <div class="investor-title">Founder</div>
+                <div class="company-logo">CRED</div>
+            </div>
+            
+            <div class="investor-card">
+                <div class="investor-image"></div>
+                <div class="investor-name">Amrish Rau</div>
+                <div class="investor-title">CEO</div>
+                <div class="company-logo">PINE</div>
+            </div>
+            
+            <div class="investor-card">
+                <div class="investor-image"></div>
+                <div class="investor-name">Sampad Swain</div>
+                <div class="investor-title">Co-founder & CEO</div>
+                <div class="company-logo">Instamojo</div>
+            </div>
+            
+            <div class="investor-card">
+                <div class="investor-image"></div>
+                <div class="investor-name">Anshush Sachdeva</div>
+                <div class="investor-title">Co-founder & CEO</div>
+                <div class="company-logo">SOCIAL</div>
+            </div>
+            
+            <div class="investor-card">
+                <div class="investor-image"></div>
+                <div class="investor-name">Bhanu Pratap Singh</div>
+                <div class="investor-title">Co-founder</div>
+                <div class="company-logo">TRIBE</div>
+            </div>
+            
+            <div class="investor-card">
+                <div class="investor-image"></div>
+                <div class="investor-name">Farid Ahsan</div>
+                <div class="investor-title">Co-founder & COO</div>
+                <div class="company-logo">SHARE</div>
+            </div>
+            
+            <div class="investor-card">
+                <div class="investor-image"></div>
+                <div class="investor-name">Amit Kumar Agarwal</div>
+                <div class="investor-title">Founder & CEO</div>
+                <div class="company-logo">NOBRO</div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
