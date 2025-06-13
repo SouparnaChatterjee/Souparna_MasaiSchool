@@ -1,0 +1,150 @@
+/* Reset and Base Styles */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    line-height: 1.6;
+}
+
+/* Navbar Styles */
+.navbar {
+    background-color: #333;
+    padding: 1rem;
+    color: white;
+}
+
+.nav-brand {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.logo {
+    color: white;
+    text-decoration: none;
+    font-size: 1.5rem;
+    font-weight: bold;
+}
+
+.nav-menu {
+    list-style: none;
+}
+
+.nav-link {
+    color: white;
+    text-decoration: none;
+    padding: 0.5rem 1rem;
+    display: block;
+    transition: color 0.3s ease;
+}
+
+.nav-link:hover {
+    color: #ddd;
+}
+
+/* Hamburger Button */
+.hamburger {
+    display: none;
+    background: none;
+    border: none;
+    color: white;
+    font-size: 1.5rem;
+    cursor: pointer;
+    padding: 0.5rem;
+}
+
+/* Main Content */
+main {
+    padding: 2rem;
+}
+
+/* Mobile Styles (less than 768px) */
+@media screen and (max-width: 767px) {
+    .hamburger {
+        display: block;
+    }
+
+    .nav-menu {
+        display: none;
+        width: 100%;
+    }
+
+    .nav-menu.active {
+        display: block;
+    }
+
+    .nav-item {
+        text-align: center;
+        padding: 1rem 0;
+        border-top: 1px solid #444;
+    }
+}
+
+/* Tablet Styles (768px to 1023px) */
+@media screen and (min-width: 768px) and (max-width: 1023px) {
+    .hamburger {
+        display: none;
+    }
+
+    .navbar {
+        display: flex;
+        flex-direction: column;
+    }
+
+    .nav-menu {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        margin-top: 1rem;
+    }
+
+    .nav-item {
+        width: 100%;
+        text-align: center;
+        padding: 0.5rem 0;
+    }
+}
+
+/* Desktop Styles (1024px and above) */
+@media screen and (min-width: 1024px) {
+    .hamburger {
+        display: none;
+    }
+
+    .navbar {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 1rem 2rem;
+    }
+
+    .nav-menu {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+    }
+
+    .nav-item {
+        margin-left: 1rem;
+    }
+}
+
+/* Animation for menu transition */
+@keyframes slideDown {
+    from {
+        opacity: 0;
+        transform: translateY(-10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.nav-menu.active {
+    animation: slideDown 0.3s ease forwards;
+}
