@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Interactive DOM Manipulation</title>
+    <style>
+        /* Basic styling for better UI */
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 600px;
+            margin: 20px auto;
+            padding: 20px;
+        }
+
+        .input-container {
+            margin-bottom: 20px;
+        }
+
+        input {
+            padding: 8px;
+            margin-right: 10px;
+            width: 200px;
+        }
+
+        button {
+            padding: 8px 16px;
+            cursor: pointer;
+            margin-right: 10px;
+        }
+
+        #contentDiv {
+            padding: 20px;
+            border: 1px solid #ccc;
+            margin-top: 20px;
+            min-height: 100px;
+            transition: background-color 0.3s;
+        }
+    </style>
+</head>
+<body>
+    <!-- Input container for color -->
+    <div class="input-container">
+        <input type="text" id="colorInput" placeholder="Enter color name">
+        <button id="colorButton">Change Background</button>
+    </div>
+
+    <!-- Input container for text -->
+    <div class="input-container">
+        <input type="text" id="textInput" placeholder="Enter text content">
+        <button id="textButton">Update Text</button>
+    </div>
+
+    <!-- Target div for manipulation -->
+    <div id="contentDiv">
+        Initial content in the div
+    </div>
+
+    <script>
+        // Get all necessary DOM elements
+        const colorInput = document.getElementById('colorInput');
+        const textInput = document.getElementById('textInput');
+        const colorButton = document.getElementById('colorButton');
+        const textButton = document.getElementById('textButton');
+        const contentDiv = document.getElementById('contentDiv');
+
+        // Function to validate color
+        function isValidColor(color) {
+            // Create a temporary div to test the color
+            const tempDiv = document.createElement('div');
+            tempDiv.style.backgroundColor = color;
+            
+            // If the color is invalid, backgroundColor will be empty
+            return tempDiv.style.backgroundColor !== '';
+        }
+
+        // Function to change background color
+        function changeBackgroundColor() {
+            const color = colorInput.value.trim();
+
+            // Check if color is valid
+            if (!color) {
+                alert('Please enter a color name!');
+                return;
+            }
+
+            if (!isValidColor(color)) {
+                alert('Invalid color name!');
+                return;
+            }
+
+            // Change the background color
+            contentDiv.style.backgroundColor = color;
+            
+            // Clear the input field after successful change
+            colorInput.value = '';
+        }
+
+        // Function to update text content
+        function updateText() {
+            const text = textInput.value.trim();
+
+            // Check if text is empty
+            if (!text) {
+                alert('Please enter some text!');
+                return;
+            }
+
+            // Update the text content
+            contentDiv.textContent = text;
+            
+            // Clear the input field after successful update
+            textInput.value = '';
+        }
+
+        // Add event listeners to buttons
+        colorButton.addEventListener('click', changeBackgroundColor);
+        textButton.addEventListener('click', updateText);
+
+        // Add event listeners for Enter key
+        colorInput.addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') {
+                changeBackgroundColor();
+            }
+        });
+
+        textInput.addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') {
+                updateText();
+            }
+        });
+
+        // Error handling for DOM elements
+        if (!colorInput || !textInput || !colorButton || !textButton || !contentDiv) {
+            console.error('One or more elements not found');
+        }
+    </script>
+</body>
+</html>
