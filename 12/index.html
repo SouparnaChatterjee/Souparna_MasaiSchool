@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dynamic List Builder</title>
+    <style>
+        /* Basic styling for better UI */
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 600px;
+            margin: 20px auto;
+            padding: 20px;
+        }
+
+        button {
+            padding: 8px 16px;
+            margin: 10px 0;
+            cursor: pointer;
+            font-size: 16px;
+        }
+
+        ul {
+            padding-left: 20px;
+        }
+
+        /* Styles for odd numbered items */
+        .odd-item {
+            font-weight: bold;
+            color: blue;
+        }
+
+        /* Styles for even numbered items */
+        .even-item {
+            font-style: italic;
+            color: red;
+        }
+    </style>
+</head>
+<body>
+    <h2>Dynamic List Builder</h2>
+    
+    <!-- Initial list with three items -->
+    <ul id="itemList">
+        <li class="odd-item">Item 1</li>
+        <li class="even-item">Item 2</li>
+        <li class="odd-item">Item 3</li>
+    </ul>
+
+    <!-- Button to add new items -->
+    <button id="addButton">Add Item</button>
+
+    <script>
+        // Get references to DOM elements
+        const itemList = document.querySelector('#itemList');
+        const addButton = document.querySelector('#addButton');
+
+        // Function to add new item
+        function addNewItem() {
+            // Get current number of items
+            const currentItemCount = itemList.children.length;
+            
+            // Create new list item
+            const newItem = document.createElement('li');
+            
+            // Set the text content
+            newItem.textContent = `Item ${currentItemCount + 1}`;
+            
+            // Apply styling based on item number
+            if ((currentItemCount + 1) % 2 === 1) {
+                // Odd numbered item
+                newItem.className = 'odd-item';
+            } else {
+                // Even numbered item
+                newItem.className = 'even-item';
+            }
+            
+            // Add the new item to the list
+            itemList.appendChild(newItem);
+        }
+
+        // Add click event listener to button
+        addButton.addEventListener('click', addNewItem);
+
+        // Error handling
+        if (!itemList || !addButton) {
+            console.error('Required elements not found');
+        }
+    </script>
+</body>
+</html>
