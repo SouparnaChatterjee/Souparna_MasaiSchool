@@ -5,50 +5,50 @@
 </head>
 <body>
 
-  <!-- Input field for user to type a task -->
+  <!-- Input where user enters a task -->
   <input id="taskInput" type="text" placeholder="Enter task">
-  
-  <!-- Button to add the typed task to the task list -->
+
+  <!-- Button to trigger adding a task to the list -->
   <button id="addTask">Add Task</button>
-  
-  <!-- Unordered list that will display added tasks -->
+
+  <!-- Unordered list to hold task items -->
   <ul id="taskList"></ul>
 
   <script>
-    // Getting references to DOM elements
+    // Get references to important DOM elements
     const addTaskButton = document.getElementById('addTask');
     const taskInput = document.getElementById('taskInput');
     const taskList = document.getElementById('taskList');
 
-    // Function to add a new task when the button is clicked
+    // When the "Add Task" button is clicked
     addTaskButton.onclick = function () {
-      // Get the value from the input and remove leading/trailing spaces
+      // Get the text from input and remove extra whitespace
       const taskText = taskInput.value.trim();
 
-      // Prevent adding empty or whitespace-only tasks
+      // If the input is empty after trimming, show alert and stop execution
       if (taskText === "") {
         alert("Please enter a task.");
-        return; // Exit function early
+        return;
       }
 
-      // Create a new list item (li) for the task
+      // Create a new list item element to represent the task
       const newTask = document.createElement('li');
 
-      // Set the task's text content safely
+      // Use textContent to safely add text (avoids potential HTML injection)
       newTask.textContent = taskText;
 
-      // Add the new task to the list using appendChild (suitable for single node insertion)
+      // ✅ FIXED: appendChild is used instead of append to add the new task
       taskList.appendChild(newTask);
 
-      // Clear the input field after adding the task
+      // Clear the input field after task is added
       taskInput.value = "";
     };
 
-    // Function to handle click events on the task list
+    // When any part of the task list is clicked
     taskList.onclick = function (e) {
-      // Check if the clicked element is a list item (li)
+      // ✅ FIXED: e.target.tagName is used to ensure we check the clicked element
       if (e.target.tagName === 'LI') {
-        // Remove the clicked task from the list
+        // Remove the clicked task item
         e.target.remove();
       }
     };
