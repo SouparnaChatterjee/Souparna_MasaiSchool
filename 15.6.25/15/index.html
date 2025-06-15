@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>Advanced Task Manager</title>
+  <style>
+    .completed {
+      text-decoration: line-through;
+      color: gray;
+    }
+  </style>
+</head>
+<body>
+
+  <h2>Advanced Task Manager</h2>
+
+  <!-- Input field and button for adding tasks -->
+  <input type="text" id="taskInput" placeholder="Enter a new task" />
+  <button id="addTaskBtn">Add Task</button>
+
+  <!-- Buttons to filter tasks -->
+  <div>
+    <button id="allBtn">All Tasks</button>
+    <button id="completedBtn">Completed</button>
+    <button id="incompleteBtn">Incomplete</button>
+    <button id="sortBtn">Sort Alphabetically</button>
+  </div>
+
+  <!-- Counter display -->
+  <div id="counters">
+    Total: 0 | Completed: 0 | Incomplete: 0
+  </div>
+
+  <!-- Task list will appear here -->
+  <ul id="taskList"></ul>
+
+  <script src="script.js"></script>
+</body>
+</html>
