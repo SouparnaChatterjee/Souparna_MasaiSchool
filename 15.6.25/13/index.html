@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Event Propagation</title>
+  <style>
+    div {
+      padding: 20px;
+      margin: 10px;
+      border: 2px solid black;
+    }
+  </style>
+</head>
+<body>
+
+  <div id="outer">
+    Outer Div
+    <button id="btnOuter">Outer Button</button>
+
+    <div id="middle">
+      Middle Div
+      <button id="btnMiddle">Middle Button</button>
+
+      <div id="inner">
+        Inner Div
+        <button id="btnInner">Inner Button</button>
+      </div>
+    </div>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
