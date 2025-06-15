@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>Task List</title>
+</head>
+<body>
+
+  <!-- Input field for user to type a task -->
+  <input id="taskInput" type="text" placeholder="Enter task">
+  
+  <!-- Button to add the typed task to the task list -->
+  <button id="addTask">Add Task</button>
+  
+  <!-- Unordered list that will display added tasks -->
+  <ul id="taskList"></ul>
+
+  <script>
+    // Getting references to DOM elements
+    const addTaskButton = document.getElementById('addTask');
+    const taskInput = document.getElementById('taskInput');
+    const taskList = document.getElementById('taskList');
+
+    // Function to add a new task when the button is clicked
+    addTaskButton.onclick = function () {
+      // Get the value from the input and remove leading/trailing spaces
+      const taskText = taskInput.value.trim();
+
+      // Prevent adding empty or whitespace-only tasks
+      if (taskText === "") {
+        alert("Please enter a task.");
+        return; // Exit function early
+      }
+
+      // Create a new list item (li) for the task
+      const newTask = document.createElement('li');
+
+      // Set the task's text content safely
+      newTask.textContent = taskText;
+
+      // Add the new task to the list using appendChild (suitable for single node insertion)
+      taskList.appendChild(newTask);
+
+      // Clear the input field after adding the task
+      taskInput.value = "";
+    };
+
+    // Function to handle click events on the task list
+    taskList.onclick = function (e) {
+      // Check if the clicked element is a list item (li)
+      if (e.target.tagName === 'LI') {
+        // Remove the clicked task from the list
+        e.target.remove();
+      }
+    };
+  </script>
+
+</body>
+</html>
