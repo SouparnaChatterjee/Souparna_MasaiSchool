@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Dynamic Theme Selector</title>
+  <style>
+    /* Base styles for all themes */
+    body {
+      transition: background-color 0.3s ease, color 0.3s ease;
+      font-family: Arial, sans-serif;
+      padding: 20px;
+    }
+
+    label {
+      font-size: 18px;
+      margin-right: 10px;
+    }
+
+    select {
+      padding: 8px 12px;
+      font-size: 16px;
+    }
+
+    /* Light Theme */
+    .light-theme {
+      background-color: #ffffff;
+      color: #000000;
+    }
+
+    /* Dark Theme */
+    .dark-theme {
+      background-color: #1e1e1e;
+      color: #f1f1f1;
+    }
+
+    /* Blue Theme */
+    .blue-theme {
+      background-color: #0077cc;
+      color: #ffffff;
+    }
+  </style>
+</head>
+<body>
+
+  <label for="themeSelector">Select Theme:</label>
+  <select id="themeSelector">
+    <option value="light">Light</option>
+    <option value="dark">Dark</option>
+    <option value="blue">Blue</option>
+  </select>
+
+  <h2>Welcome to the Themed Page</h2>
+  <p>This page theme will persist until you close this tab.</p>
+
+  <script>
+    const selector = document.getElementById('themeSelector');
+    const body = document.body;
+
+    // Apply theme based on the selected value
+    function applyTheme(theme) {
+      // Clear existing theme classes
+      body.classList.remove('light-theme', 'dark-theme', 'blue-theme');
+
+      // Add the new one
+      if (theme === 'dark') {
+        body.classList.add('dark-theme');
+      } else if (theme === 'blue') {
+        body.classList.add('blue-theme');
+      } else {
+        body.classList.add('light-theme');
+      }
+    }
+
+    // On page load: check sessionStorage and apply saved theme
+    window.onload = function () {
+      const savedTheme = sessionStorage.getItem('theme') || 'light'; // Default to light
+      selector.value = savedTheme;
+      applyTheme(savedTheme);
+    };
+
+    // When dropdown selection changes, update theme and sessionStorage
+    selector.addEventListener('change', function () {
+      const selectedTheme = selector.value;
+      sessionStorage.setItem('theme', selectedTheme); // Store it for the session
+      applyTheme(selectedTheme); // Apply it immediately
+    });
+  </script>
+
+</body>
+</html>
+
