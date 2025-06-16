@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Save and Load Notes</title>
+  <style>
+    /* Basic styling for layout */
+    body {
+      font-family: Arial, sans-serif;
+      padding: 20px;
+      background-color: #f3f3f3;
+    }
+
+    textarea {
+      width: 100%;
+      height: 200px;
+      padding: 10px;
+      font-size: 16px;
+      resize: none;
+    }
+
+    button {
+      margin: 10px 10px 0 0;
+      padding: 10px 20px;
+      font-size: 16px;
+      cursor: pointer;
+    }
+  </style>
+</head>
+<body>
+
+  <h2>📝 Your Notes</h2>
+
+  <!-- Main text area for notes input -->
+  <textarea id="noteArea" placeholder="Type your notes here..."></textarea><br/>
+
+  <!-- Buttons to handle saving, loading, and clearing notes -->
+  <button onclick="saveNotes()">Save Notes</button>
+  <button onclick="loadNotes()">Load Notes</button>
+  <button onclick="clearNotes()">Clear Notes</button>
+
+  <script>
+    const noteArea = document.getElementById("noteArea");
+
+    // Load notes from localStorage as soon as the page loads
+    window.onload = function () {
+      loadNotes(); // This ensures the user sees their saved notes without pressing "Load Notes"
+    };
+
+    // Save notes to localStorage
+    function saveNotes() {
+      const note = noteArea.value.trim(); // Remove any extra spaces
+
+      // Avoid saving empty strings
+      if (note === "") {
+        alert("Cannot save empty notes.");
+        return;
+      }
+
+      // Actually save the notes
+      localStorage.setItem("userNotes", note);
+      alert("Notes saved!"); // Feedback for user
+    }
+
+    // Load notes back into the textarea
+    function loadNotes() {
+      const savedNote = localStorage.getItem("userNotes");
+
+      // Only update if we have something saved
+      if (savedNote) {
+        noteArea.value = savedNote;
+      }
+    }
+
+    // Clear everything: textarea and localStorage
+    function clearNotes() {
+      localStorage.removeItem("userNotes"); // Remove the saved note
+      noteArea.value = ""; // Clear the text area
+      alert("Notes cleared."); // Let user know it worked
+    }
+  </script>
+
+</body>
+</html>
