@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Multi-User Shopping Cart</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <h2>Login</h2>
+  <input type="text" id="usernameInput" placeholder="Enter unique username" />
+  <button onclick="login()">Login</button>
+  <p id="loginStatus"></p>
+
+  <hr>
+
+  <div id="cartSection" style="display: none;">
+    <h2>Welcome, <span id="currentUser"></span>!</h2>
+
+    <h3>Add Item</h3>
+    <input type="text" id="itemName" placeholder="Item Name">
+    <input type="number" id="price" placeholder="Price">
+    <input type="number" id="quantity" placeholder="Quantity">
+    <button onclick="addItem()">Add to Cart</button>
+
+    <h3>Your Cart</h3>
+    <table border="1">
+      <thead>
+        <tr>
+          <th>Item</th><th>Price</th><th>Quantity</th><th>Total</th><th>Actions</th>
+        </tr>
+      </thead>
+      <tbody id="cartTable"></tbody>
+    </table>
+
+    <h3>Total Cost: ₹<span id="totalCost">0</span></h3>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
