@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Product Listing</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      padding: 2rem;
+    }
+
+    h1 {
+      color: #2c3e50;
+      margin-bottom: 1rem;
+    }
+
+    .products {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+      gap: 1.5rem;
+    }
+
+    .product-card {
+      border: 1px solid #ddd;
+      border-radius: 8px;
+      padding: 1rem;
+      text-align: center;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    }
+
+    .product-card img {
+      width: 100px;
+      height: 100px;
+      object-fit: contain;
+      margin-bottom: 0.5rem;
+    }
+
+    .product-card h3 {
+      font-size: 1rem;
+      margin: 0.5rem 0;
+    }
+
+    .product-card p {
+      margin: 0.5rem 0;
+      color: #27ae60;
+      font-weight: bold;
+    }
+
+    .product-card button {
+      background-color: #3498db;
+      color: white;
+      border: none;
+      padding: 0.5rem 1rem;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+
+    .product-card button:hover {
+      background-color: #2980b9;
+    }
+
+    .error {
+      color: red;
+      font-weight: bold;
+    }
+  </style>
+</head>
+<body>
+
+  <h1>Product Listing</h1>
+  <div id="error" class="error"></div>
+  <div class="products" id="productContainer">
+    <!-- Product cards will be inserted here -->
+  </div>
+
+  <script>
+    const productContainer = document.getElementById('productContainer');
+    const errorDiv = document.getElementById('error');
+
+    // Function to fetch and display products
+    async function fetchProducts() {
+      try {
+        // Fetch product data
+        const res = await fetch('https://fakestoreapi.com/products');
+        
+        // If the response is not OK, throw an error
+        if (!res.ok) {
+          throw new Error('Network response was not ok');
+        }
+
+        const products = await res.json();
+
+        // Loop through each product and create its card
+        products.forEach(product => {
+          const card = document.createElement('div');
+          card.className = 'product-card';
+
+          card.innerHTML = `
+            <img src="${product.image}" alt="${product.title}" />
+            <h3>${product.title}</h3>
+            <p>$${product.price}</p>
+            <button onclick="alert('Viewing details for: ${product.title}')">View Details</button>
+          `;
+
+          productContainer.appendChild(card);
+        });
+      } catch (error) {
+        // Show a user-friendly error message if fetch fails
+        errorDiv.textContent = "Failed to fetch products. Please try again later.";
+        console.error('Fetch error:', error);
+      }
+    }
+
+    // Call the function when page loads
+    fetchProducts();
+  </script>
+
+</body>
+</html>
