@@ -1,0 +1,63 @@
+body {
+  font-family: Arial, sans-serif;
+  background-color: #f2f2f2;
+  margin: 0;
+  padding: 20px;
+}
+
+.container {
+  max-width: 600px;
+  margin: auto;
+  background: #fff;
+  padding: 30px;
+  border-radius: 8px;
+  box-shadow: 0 0 10px #ccc;
+}
+
+h1 {
+  text-align: center;
+}
+
+ul {
+  list-style-type: none;
+  padding: 0;
+}
+
+li {
+  margin-bottom: 15px;
+  padding: 15px;
+  background-color: #f9f9f9;
+  border-left: 6px solid #2196F3;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.task-info {
+  flex: 1;
+}
+
+button {
+  margin-left: 5px;
+  padding: 5px 10px;
+  cursor: pointer;
+  border: none;
+  color: white;
+  border-radius: 4px;
+}
+
+.edit {
+  background-color: #ffc107;
+}
+
+.save {
+  background-color: #28a745;
+}
+
+.cancel {
+  background-color: #6c757d;
+}
+
+.delete {
+  background-color: #dc3545;
+}
