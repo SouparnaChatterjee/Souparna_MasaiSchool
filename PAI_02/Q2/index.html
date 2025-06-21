@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+         <meta charset="UTF-8">
+         <meta name="viewport" content="width=device-width, initial-scale=1.0">
+         <title> Post Gallery</title>
+         <link rel="stylesheet" href="styles.css">
+    </head>
+    <body>
+        <div class="container">
+            <div class="header">
+                <h1> Interactive Post Gallery</h1>
+            </div>
+            <div class="controls">
+                <div class="control-group">
+                    <label for="searchInput">Search Posts</label>
+                    <input type="text" id="searchInput" placeHolder="Search by title...">
+                </div>
+                <div class="control-group"> 
+                    <label for="searchInput">Filter By User</label>
+                    <select id="userFilter">
+                        <option value="">All Users</option>
+                    </select>
+                </div>
+                <div class="control-group">
+                    <label> sort options</label>
+                    <div class="sort-buttons">
+                        <button class="sort-btn active" data-sort="title-asc"> Title A-Z </button>
+                        <button class="sort-btn" data-sort="title-desc"> Title Z-A </button>
+                        <button class="sort-btn" data-sort="id-asc"> ID UP</button>
+                        <button class="sort-btn" data-sort="id-desc"> ID DOWN </button>
+                    </div>
+                </div>
+            </div>
+            <div id="postsContainer">
+                <div class="loading"> Loading posts..... </div>
+            </div>
+        </div>
+        <script src="script.js"></script>
+    </body>
+</html>
