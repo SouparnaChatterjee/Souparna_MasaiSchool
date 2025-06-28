@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>JSX Debug - Babel Setup</title>
+
+  <!-- React core library (needed to build components) -->
+  <script src="https://unpkg.com/react@18/umd/react.development.js" crossorigin></script>
+
+  <!-- ReactDOM is responsible for rendering components into the page -->
+  <script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js" crossorigin></script>
+
+  <!-- Babel is required to convert JSX into plain JavaScript -->
+  <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+</head>
+<body>
+  <!-- This is where our React component will be shown -->
+  <div id="root"></div>
+
+  <!-- 
+    Below is our React code that uses JSX. 
+    The type must be "text/babel" so that Babel knows to transpile the JSX.
+  -->
+  <script type="text/babel">
+    // First, we get the root DOM element
+    const root = ReactDOM.createRoot(document.getElementById("root"));
+
+    // Then we render an <h1> element using JSX inside the root
+    root.render(<h1>Hello, JSX!</h1>);
+  </script>
+</body>
+</html>
