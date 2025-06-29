@@ -1,0 +1,106 @@
+import React from 'react';
+import { Check } from 'lucide-react';
+
+// Reusable PricingCard component following DRY principle
+const PricingCard = ({ title, price, features, buttonText, isHighlighted = false }) => {
+  return (
+    <div className={`bg-white rounded-lg shadow-md p-6 ${isHighlighted ? 'border-2 border-blue-500' : 'border border-gray-200'}`}>
+      <h3 className="text-xl font-semibold text-gray-800 mb-4">{title}</h3>
+      
+      <div className="mb-6">
+        <span className="text-3xl font-bold text-gray-900">{price}</span>
+      </div>
+      
+      <ul className="space-y-3 mb-6">
+        {features.map((feature, index) => (
+          <li key={index} className="flex items-center text-gray-600">
+            <Check className="w-5 h-5 text-green-500 mr-3 flex-shrink-0" />
+            <span className="text-sm">{feature}</span>
+          </li>
+        ))}
+      </ul>
+      
+      <button className={`w-full py-2 px-4 rounded-md font-medium transition-colors ${
+        isHighlighted 
+          ? 'bg-blue-600 text-white hover:bg-blue-700' 
+          : 'bg-blue-100 text-blue-600 hover:bg-blue-200'
+      }`}>
+        {buttonText}
+      </button>
+    </div>
+  );
+};
+
+// Main PricingPlan component
+const PricingPlan = () => {
+  // Data for each pricing tier
+  const pricingData = [
+    {
+      title: "Starter",
+      price: "Free",
+      features: [
+        "1 lorem ipsum",
+        "Lorem, ipsum dolor",
+        "Monthly Updates"
+      ],
+      buttonText: "Get Started",
+      isHighlighted: false
+    },
+    {
+      title: "Lorem Plus",
+      price: "$32.00",
+      features: [
+        "1 lorem ipsum",
+        "Lorem, ipsum dolor",
+        "Monthly Updates"
+      ],
+      buttonText: "Get Started",
+      isHighlighted: true
+    },
+    {
+      title: "Lorem Pro",
+      price: "$50.00",
+      features: [
+        "1 lorem ipsum",
+        "Lorem, ipsum dolor",
+        "Monthly Updates"
+      ],
+      buttonText: "Get Started",
+      isHighlighted: false
+    }
+  ];
+
+  return (
+    <div className="min-h-screen bg-gray-50 py-12 px-4">
+      <div className="max-w-6xl mx-auto">
+        {/* Header Section */}
+        <div className="text-center mb-12">
+          <h1 className="text-4xl font-bold text-gray-900 mb-4">
+            The Right Plan for
+          </h1>
+          <h2 className="text-4xl font-bold text-blue-600 mb-6">Your Business</h2>
+          <p className="text-gray-600 max-w-2xl mx-auto">
+            Lorem ipsum dolor sit amet consectetur adipiscing elit. Numquam
+            quod in iure vero. Facilis magnam, sed officiis commodi labore odit.
+          </p>
+        </div>
+
+        {/* Pricing Cards Grid */}
+        <div className="grid md:grid-cols-3 gap-8 max-w-5xl mx-auto">
+          {pricingData.map((plan, index) => (
+            <PricingCard
+              key={index}
+              title={plan.title}
+              price={plan.price}
+              features={plan.features}
+              buttonText={plan.buttonText}
+              isHighlighted={plan.isHighlighted}
+            />
+          ))}
+        </div>
+      </div>
+    </div>
+  );
+};
+
+export default PricingPlan;
