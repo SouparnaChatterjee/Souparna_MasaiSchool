@@ -1,0 +1,44 @@
+.App {
+  font-family: Arial, sans-serif;
+  text-align: center;
+  padding: 2rem;
+}
+
+.student-list {
+  margin-top: 20px;
+}
+
+.student {
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+  padding: 10px;
+  margin: 5px auto;
+  width: 60%;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+}
+
+.present {
+  background-color: #e0ffe0;
+  color: green;
+}
+
+.absent {
+  background-color: #ffe0e0;
+  color: red;
+}
+
+button {
+  padding: 6px 12px;
+  cursor: pointer;
+}
+
+.filter {
+  margin-bottom: 1rem;
+}
+
+.summary {
+  margin-top: 20px;
+  font-weight: bold;
+}
