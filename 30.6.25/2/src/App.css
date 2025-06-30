@@ -1,0 +1,44 @@
+.App {
+  font-family: Arial, sans-serif;
+  padding: 2rem;
+}
+
+.input-section input,
+.input-section select,
+.filters select {
+  margin-right: 10px;
+  padding: 5px;
+}
+
+button {
+  padding: 5px 10px;
+  cursor: pointer;
+}
+
+.task-list {
+  list-style: none;
+  padding: 0;
+}
+
+.task {
+  margin: 10px 0;
+  padding: 10px;
+  border: 1px solid #ccc;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.task span {
+  cursor: pointer;
+}
+
+.completed span {
+  text-decoration: line-through;
+  color: gray;
+}
+
+.high-priority {
+  background-color: #ffe0e0;
+  border-left: 5px solid red;
+}
