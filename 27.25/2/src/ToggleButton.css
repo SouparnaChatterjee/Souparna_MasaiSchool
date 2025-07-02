@@ -1,0 +1,27 @@
+.toggle-container {
+  text-align: center;
+  margin-top: 20px;
+  font-family: sans-serif;
+}
+
+.label {
+  margin-right: 10px;
+  font-weight: bold;
+}
+
+.toggle {
+  padding: 10px 20px;
+  font-size: 18px;
+  border: none;
+  cursor: pointer;
+  color: white;
+  border-radius: 5px;
+}
+
+.on {
+  background-color: green;
+}
+
+.off {
+  background-color: red;
+}
