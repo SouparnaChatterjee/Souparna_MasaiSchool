@@ -1,0 +1,39 @@
+body {
+  font-family: sans-serif;
+  background: #f9f9f9;
+}
+
+.form-container {
+  max-width: 600px;
+  margin: 40px auto;
+  background: #fff;
+  padding: 25px;
+  border-radius: 8px;
+  box-shadow: 0px 2px 8px rgba(0,0,0,0.1);
+}
+
+input {
+  width: 100%;
+  margin: 10px 0;
+  padding: 10px;
+  font-size: 16px;
+}
+
+button {
+  margin: 10px 5px 10px 0;
+  padding: 10px 15px;
+  font-size: 16px;
+  cursor: pointer;
+}
+
+.output {
+  margin-top: 30px;
+  background: #e8f0fe;
+  padding: 20px;
+  border-radius: 6px;
+}
+
+.error {
+  color: red;
+  font-weight: bold;
+}
