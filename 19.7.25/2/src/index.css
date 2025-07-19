@@ -1,0 +1,13 @@
+body {
+  margin: 0;
+  background: #f0f0f0;
+}
+button {
+  padding: 10px 20px;
+  font-size: 1rem;
+  cursor: pointer;
+}
+button:disabled {
+  background: #ccc;
+  cursor: not-allowed;
+}
