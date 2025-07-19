@@ -1,0 +1,182 @@
+import React, { useState, useCallback, useMemo } from 'react';
+
+// Post component - memoized to prevent unnecessary re-renders
+const Post = React.memo(({ post, onToggleVerify }) => {
+  // Memoize the background color to prevent recalculation on every render
+  const backgroundColor = useMemo(() => {
+    const colors = ['#8bc34a', '#4caf50', '#ff9800', '#f44336', '#9c27b0', '#3f51b5', '#00bcd4', '#ffeb3b'];
+    return colors[post.id % colors.length];
+  }, [post.id]);
+
+  // Memoized toggle handler to prevent function recreation
+  const handleToggle = useCallback(() => {
+    onToggleVerify(post.id);
+  }, [post.id, onToggleVerify]);
+
+  return (
+    <div 
+      className="p-4 rounded-lg shadow-md mb-4"
+      style={{ backgroundColor }}
+    >
+      <h3 className="text-lg font-bold text-white mb-2">{post.title}</h3>
+      <p className="text-white mb-3">{post.body}</p>
+      <div className="flex justify-between items-center">
+        <span className="text-white text-sm">Post {post.id}</span>
+        <button
+          onClick={handleToggle}
+          className="px-3 py-1 bg-white bg-opacity-30 hover:bg-opacity-50 text-white rounded transition-all duration-200"
+        >
+          {post.verifyPost ? 'Verified' : 'Verify'}
+        </button>
+      </div>
+    </div>
+  );
+});
+
+Post.displayName = 'Post';
+
+export default function App() {
+  // Timer state that increments every second
+  const [timer, setTimer] = useState(0);
+  
+  // Form input states
+  const [title, setTitle] = useState('');
+  const [body, setBody] = useState('');
+  
+  // Posts array
+  const [posts, setPosts] = useState([]);
+
+  // Start timer on component mount
+  React.useEffect(() => {
+    const interval = setInterval(() => {
+      setTimer(prev => prev + 1);
+    }, 1000);
+    
+    return () => clearInterval(interval);
+  }, []);
+
+  // Memoized callback to add new post - prevents recreation on every render
+  const handleAddPost = useCallback(() => {
+    if (title.trim() && body.trim()) {
+      const newPost = {
+        id: posts.length + 1,
+        title: title.trim(),
+        body: body.trim(),
+        verifyPost: false
+      };
+      
+      setPosts(prevPosts => [...prevPosts, newPost]);
+      setTitle('');
+      setBody('');
+    }
+  }, [title, body, posts.length]);
+
+  // Memoized callback to toggle verification status
+  const handleToggleVerify = useCallback((postId) => {
+    setPosts(prevPosts => 
+      prevPosts.map(post => 
+        post.id === postId 
+          ? { ...post, verifyPost: !post.verifyPost }
+          : post
+      )
+    );
+  }, []);
+
+  // Memoized input change handlers
+  const handleTitleChange = useCallback((e) => {
+    setTitle(e.target.value);
+  }, []);
+
+  const handleBodyChange = useCallback((e) => {
+    setBody(e.target.value);
+  }, []);
+
+  // Memoized posts list to prevent unnecessary recalculations
+  const postsList = useMemo(() => {
+    return posts.map(post => (
+      <Post
+        key={post.id}
+        post={post}
+        onToggleVerify={handleToggleVerify}
+      />
+    ));
+  }, [posts, handleToggleVerify]);
+
+  // Format timer display
+  const formattedTimer = useMemo(() => {
+    const minutes = Math.floor(timer / 60);
+    const seconds = timer % 60;
+    return `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+  }, [timer]);
+
+  return (
+    <div className="min-h-screen bg-gray-100 p-8">
+      <div className="max-w-4xl mx-auto">
+        {/* Header */}
+        <div className="bg-white rounded-lg shadow-md p-6 mb-8">
+          <h1 className="text-3xl font-bold text-gray-800 mb-4">
+            Optimized Post Management App
+          </h1>
+          <div className="text-xl font-mono text-blue-600 mb-4">
+            Timer: {formattedTimer}
+          </div>
+          
+          {/* Add Post Form */}
+          <div className="space-y-4">
+            <input
+              type="text"
+              placeholder="Enter post title"
+              value={title}
+              onChange={handleTitleChange}
+              className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+            />
+            <textarea
+              placeholder="Enter post body"
+              value={body}
+              onChange={handleBodyChange}
+              rows={3}
+              className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent resize-none"
+            />
+            <button
+              onClick={handleAddPost}
+              disabled={!title.trim() || !body.trim()}
+              className="px-6 py-2 bg-blue-600 hover:bg-blue-700 disabled:bg-gray-400 disabled:cursor-not-allowed text-white rounded-lg font-semibold transition-colors duration-200"
+            >
+              Add Post
+            </button>
+          </div>
+        </div>
+
+        {/* Posts Section */}
+        <div className="bg-white rounded-lg shadow-md p-6">
+          <h2 className="text-2xl font-bold text-gray-800 mb-6">
+            Posts ({posts.length})
+          </h2>
+          
+          {posts.length === 0 ? (
+            <div className="text-center py-12 text-gray-500">
+              <p className="text-lg">No posts yet. Create your first post above!</p>
+            </div>
+          ) : (
+            <div className="space-y-4">
+              {postsList}
+            </div>
+          )}
+        </div>
+
+        {/* Performance Info */}
+        <div className="mt-8 bg-blue-50 rounded-lg p-6">
+          <h3 className="text-lg font-semibold text-blue-800 mb-2">
+            Performance Optimizations Applied:
+          </h3>
+          <ul className="text-blue-700 space-y-1">
+            <li>• <strong>React.memo:</strong> Post component memoized to prevent unnecessary re-renders</li>
+            <li>• <strong>useCallback:</strong> Event handlers memoized to maintain referential equality</li>
+            <li>• <strong>useMemo:</strong> Background colors and post list memoized for performance</li>
+            <li>• <strong>Efficient updates:</strong> State updates use functional form to prevent stale closures</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  );
+}
