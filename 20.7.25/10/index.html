@@ -1,0 +1,237 @@
+import React, { useState, useEffect, useMemo, useCallback, memo } from 'react';
+
+// Unoptimized Post Component (for "before" demonstration)
+const UnoptimizedPost = ({ post, onToggleVerify }) => {
+  console.log(`Rendering UnoptimizedPost: ${post.title}`);
+  
+  // Generate background color every render (inefficient)
+  const backgroundColor = `hsl(${Math.floor(Math.random() * 360)}, 70%, 80%)`;
+  
+  return (
+    <div 
+      className="p-4 mb-4 rounded-lg border-2 border-gray-200"
+      style={{ backgroundColor }}
+    >
+      <h3 className="text-lg font-bold text-gray-800">{post.title}</h3>
+      <p className="text-gray-600 mt-2">{post.body}</p>
+      <div className="flex items-center justify-between mt-3">
+        <span className="text-sm text-gray-500">ID: {post.id}</span>
+        <button
+          onClick={() => onToggleVerify(post.id)}
+          className={`px-3 py-1 rounded text-sm font-medium ${
+            post.verifyPost 
+              ? 'bg-green-500 text-white' 
+              : 'bg-gray-300 text-gray-700'
+          }`}
+        >
+          {post.verifyPost ? 'Verified' : 'Verify'}
+        </button>
+      </div>
+    </div>
+  );
+};
+
+// Optimized Post Component using React.memo
+const OptimizedPost = memo(({ post, onToggleVerify }) => {
+  console.log(`Rendering OptimizedPost: ${post.title}`);
+  
+  // Memoize background color generation
+  const backgroundColor = useMemo(() => {
+    return `hsl(${Math.floor(Math.random() * 360)}, 70%, 80%)`;
+  }, [post.id]); // Only regenerate when post.id changes
+  
+  return (
+    <div 
+      className="p-4 mb-4 rounded-lg border-2 border-gray-200"
+      style={{ backgroundColor }}
+    >
+      <h3 className="text-lg font-bold text-gray-800">{post.title}</h3>
+      <p className="text-gray-600 mt-2">{post.body}</p>
+      <div className="flex items-center justify-between mt-3">
+        <span className="text-sm text-gray-500">ID: {post.id}</span>
+        <button
+          onClick={() => onToggleVerify(post.id)}
+          className={`px-3 py-1 rounded text-sm font-medium ${
+            post.verifyPost 
+              ? 'bg-green-500 text-white' 
+              : 'bg-gray-300 text-gray-700'
+          }`}
+        >
+          {post.verifyPost ? 'Verified' : 'Verify'}
+        </button>
+      </div>
+    </div>
+  );
+});
+
+function App() {
+  // Timer state that increments every second
+  const [timer, setTimer] = useState(0);
+  
+  // Posts state
+  const [posts, setPosts] = useState([]);
+  
+  // Form inputs
+  const [title, setTitle] = useState('');
+  const [body, setBody] = useState('');
+  
+  // Toggle between optimized and unoptimized versions
+  const [useOptimized, setUseOptimized] = useState(false);
+
+  // Timer effect - increments every second
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setTimer(prev => prev + 1);
+    }, 1000);
+    
+    return () => clearInterval(interval);
+  }, []);
+
+  // Unoptimized toggle function (creates new function every render)
+  const unoptimizedToggleVerify = (postId) => {
+    setPosts(prevPosts =>
+      prevPosts.map(post =>
+        post.id === postId
+          ? { ...post, verifyPost: !post.verifyPost }
+          : post
+      )
+    );
+  };
+
+  // Optimized toggle function using useCallback
+  const optimizedToggleVerify = useCallback((postId) => {
+    setPosts(prevPosts =>
+      prevPosts.map(post =>
+        post.id === postId
+          ? { ...post, verifyPost: !post.verifyPost }
+          : post
+      )
+    );
+  }, []); // No dependencies, function never changes
+
+  // Add post function
+  const addPost = () => {
+    if (title.trim() && body.trim()) {
+      const newPost = {
+        id: Date.now(),
+        title: title.trim(),
+        body: body.trim(),
+        verifyPost: false
+      };
+      setPosts(prev => [...prev, newPost]);
+      setTitle('');
+      setBody('');
+    }
+  };
+
+  return (
+    <div className="min-h-screen bg-gray-50 p-6">
+      <div className="max-w-4xl mx-auto">
+        <h1 className="text-3xl font-bold text-gray-800 mb-6">
+          React Performance Optimization Demo
+        </h1>
+        
+        {/* Timer Display */}
+        <div className="bg-white p-4 rounded-lg shadow-md mb-6">
+          <h2 className="text-xl font-semibold mb-2">Timer: {timer} seconds</h2>
+          <p className="text-gray-600">
+            This timer updates every second to trigger re-renders and demonstrate performance differences.
+          </p>
+        </div>
+
+        {/* Optimization Toggle */}
+        <div className="bg-white p-4 rounded-lg shadow-md mb-6">
+          <label className="flex items-center space-x-2 cursor-pointer">
+            <input
+              type="checkbox"
+              checked={useOptimized}
+              onChange={(e) => setUseOptimized(e.target.checked)}
+              className="w-5 h-5"
+            />
+            <span className="text-lg font-medium">
+              Use Optimized Version (React.memo, useMemo, useCallback)
+            </span>
+          </label>
+          <p className="text-sm text-gray-600 mt-2">
+            Check the browser console to see render logs. Toggle this to compare performance.
+          </p>
+        </div>
+
+        {/* Post Creation Form */}
+        <div className="bg-white p-6 rounded-lg shadow-md mb-6">
+          <h2 className="text-xl font-semibold mb-4">Create New Post</h2>
+          <div className="space-y-4">
+            <input
+              type="text"
+              placeholder="Enter post title"
+              value={title}
+              onChange={(e) => setTitle(e.target.value)}
+              className="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+            />
+            <textarea
+              placeholder="Enter post body"
+              value={body}
+              onChange={(e) => setBody(e.target.value)}
+              rows="3"
+              className="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+            />
+            <button
+              onClick={addPost}
+              className="px-6 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 font-medium"
+            >
+              Add Post
+            </button>
+          </div>
+        </div>
+
+        {/* Posts Section */}
+        <div className="bg-white p-6 rounded-lg shadow-md">
+          <h2 className="text-xl font-semibold mb-4">
+            Posts ({useOptimized ? 'Optimized' : 'Unoptimized'})
+          </h2>
+          
+          {posts.length === 0 ? (
+            <p className="text-gray-500 text-center py-8">
+              No posts yet. Create your first post above!
+            </p>
+          ) : (
+            <div className="space-y-4">
+              {posts.map((post) =>
+                useOptimized ? (
+                  <OptimizedPost
+                    key={post.id}
+                    post={post}
+                    onToggleVerify={optimizedToggleVerify}
+                  />
+                ) : (
+                  <UnoptimizedPost
+                    key={post.id}
+                    post={post}
+                    onToggleVerify={unoptimizedToggleVerify}
+                  />
+                )
+              )}
+            </div>
+          )}
+        </div>
+
+        {/* Performance Tips */}
+        <div className="bg-blue-50 border border-blue-200 p-6 rounded-lg mt-6">
+          <h3 className="text-lg font-semibold text-blue-800 mb-3">
+            Optimization Techniques Used:
+          </h3>
+          <ul className="space-y-2 text-blue-700">
+            <li>• <strong>React.memo:</strong> Prevents Post component re-renders when props haven't changed</li>
+            <li>• <strong>useCallback:</strong> Memoizes the toggle function to prevent unnecessary re-renders</li>
+            <li>• <strong>useMemo:</strong> Memoizes background color generation to avoid recalculation</li>
+          </ul>
+          <p className="text-blue-600 mt-4 text-sm">
+            Open browser console and toggle between optimized/unoptimized versions to see the difference in render frequency!
+          </p>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+export default App;
