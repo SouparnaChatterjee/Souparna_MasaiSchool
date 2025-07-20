@@ -1,0 +1,5 @@
+- `timer`: Current time in seconds.
+- `isRunning`: Boolean showing whether timer is running.
+- `startTimer()`: Starts the timer (increments every second).
+- `stopTimer()`: Stops the timer.
+- `resetTimer()`: Resets timer to 0 and stops it.
