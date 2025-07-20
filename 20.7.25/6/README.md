@@ -1,0 +1,1 @@
+This project is a simple and practical demonstration of how to create and use custom hooks in React. I've built a custom hook called useForm that helps manage form input state and makes it easy to reset the form — clean, reusable, and beginner-friendly!
