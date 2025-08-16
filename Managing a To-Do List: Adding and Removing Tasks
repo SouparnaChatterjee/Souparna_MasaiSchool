@@ -1,4 +1,0 @@
-tasks=['eat','sleep','brush','drink','pray'];
-tasks.unshift('meditate');
-tasks.pop();
-console.log(tasks);
