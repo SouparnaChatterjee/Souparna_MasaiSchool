@@ -1,0 +1,113 @@
+
+
+1) What is Artificial Intelligence (AI)?
+
+Artificial Intelligence (AI) is the field of computer science focused on building systems that can perform tasks which normally require human intelligence.
+These tasks include reasoning, learning from data, recognizing patterns, understanding language, planning, and decision-making. Modern AI commonly
+relies on statistical techniques and machine learning — especially neural networks — to learn behaviors from examples rather than being explicitly
+programmed for every possible situation. AI systems range from narrow, single-task tools (for example, a spam filter or a recommendation engine)
+to systems that attempt broader problem-solving across domains.
+
+
+
+2) What are Large Language Models (LLMs)? How do they work?
+
+Large Language Models (LLMs) are a class of machine learning models designed to understand and generate human-like text. They are typically based on
+deep neural network architectures called transformers. LLMs are trained on very large corpora of text (web pages, books, articles, code, etc.) using
+objectives that encourage them to predict missing or next tokens in text. During training they learn statistical associations between words, phrases,
+and structures across diverse contexts, which lets them produce coherent and contextually relevant continuations or responses when prompted.
+
+
+
+Key points on how they work:
+- Tokenization: Input text is broken into tokens (subwords, words, or characters). The model processes these tokens numerically.
+- Embeddings: Each token is mapped to a dense vector that represents semantic information in a continuous space.
+- Transformer layers: Self-attention and feed-forward layers transform and combine token embeddings, allowing the model to learn which parts of the
+  input matter for producing the next token.
+- Pretraining and fine-tuning: LLMs are first pretrained on a general language objective (e.g., next-token prediction). They may then be fine-tuned on
+  more specific datasets or with supervised signals to specialize or align behavior with user expectations.
+- Decoding: At generation time, the model converts learned probabilities into actual text using decoding strategies like greedy sampling, beam search,
+  nucleus (top-p) sampling, or temperature-controlled sampling.
+
+
+
+3) What is the difference between Traditional AI and Generative AI?
+
+Traditional AI (broadly speaking):
+- Often emphasizes explicit rules, symbolic reasoning, or classical algorithms (expert systems, search, logic programming).
+- When machine learning is involved, it frequently focuses on predictive/discriminative models that map inputs to outputs (e.g., classifiers, regressors).
+- The systems are usually engineered for specific tasks with clearly defined inputs and outputs, and they often require domain-specific feature engineering.
+
+Generative AI:
+- Refers to models that create new content: text, images, audio, code, or other data modalities. Examples include LLMs for text and diffusion models
+  for images.
+- Instead of just labeling or classifying, generative models model the underlying distribution of the data and can sample novel examples from it.
+- Built around large-scale neural architectures and data-driven learning; they excel at producing fluent, creative, and variable outputs but can also
+  hallucinate or produce mistakes.
+- Use cases include drafting text, generating images, writing code, summarization, creative ideation, and data augmentation.
+
+In short: traditional AI often focuses on decision-making or classification using rules or targeted models, while generative AI focuses on producing
+new artifacts and often requires large-scale data and models to capture the complexity of human-like output.
+
+
+
+4) Explain the concept of “prompting” in the context of LLMs. Why is it important?
+
+Prompting is the process of crafting the input text (the prompt) given to an LLM to elicit a desired response. A prompt can be as simple as a
+question or as elaborate as a structured instruction with examples, constraints, and role definitions.
+Prompting techniques control model behavior without changing the model weights.
+
+Common prompting styles:
+- Zero-shot prompting: Give the model an instruction and expect it to respond without examples.
+- Few-shot prompting: Include a few input–output examples in the prompt so the model uses them as guidance for the required format and style.
+- Chain-of-thought prompting: Encourage the model to produce intermediate reasoning steps to improve multi-step or logical problem-solving.
+- System prompts / role prompts: Frame the model with a role or persona (e.g., "You are an expert tutor...") to bias tone and style.
+
+Why it is important:
+- Behavior control: A well-crafted prompt can greatly improve relevance, accuracy, and usefulness of the output.
+- Cost-effective: Prompting lets you adapt the model for many tasks without retraining or fine-tuning.
+- Safety and constraints: Prompts can help constrain undesirable outputs by specifying what to avoid or by steering tone and content.
+- Productivity: Effective prompts reduce iteration and post-editing by producing closer-to-final outputs on the first try.
+
+
+
+5) What is the role of "tokens" in a language model, and how do they impact the output?
+
+Tokens are the basic textual units that a language model processes. They are often subword pieces (like byte-pair encodings or unigram tokens), whole words,
+or characters depending on the tokenizer. Tokens are mapped to numerical IDs and then to embeddings that the model uses internally.
+
+How tokens impact the output:
+- Context window: Models have a finite context length measured in tokens (e.g., 4k, 8k, 32k tokens). Inputs and outputs both consume tokens within this
+  window. If the conversation exceeds the context window, earlier tokens may be truncated and the model loses that earlier information.
+- Cost and latency: Many APIs charge or limit usage by token count. Longer prompts and longer outputs increase cost and processing time.
+- Precision of meaning: Tokenization affects how rare words, punctuation, or compound words are represented. Poor tokenization can make certain words
+  harder for the model to treat consistently.
+- Generation control: Decoding happens token-by-token; decoding parameters (temperature, top-k, top-p) directly affect the distribution over the next
+  token and thus the diversity, creativity, or determinism of the output.
+- Output length & truncation: If the requested output plus prompt would exceed the model's token limit, the model will either be truncated or produce an
+  incomplete answer. Planning token usage is essential for longer tasks (summaries, long-form content generation).
+
+
+
+6) What are some limitations or risks of using Generative AI models like ChatGPT?
+
+Limitations:
+- Hallucination: Models can produce confident-sounding but factually incorrect statements because they predict plausible continuations rather than verify facts.
+- Lack of real understanding: LLMs model statistical patterns in language rather than possessing true comprehension or grounded reasoning about the real world.
+- Context-window limits: Long conversations or documents may exceed the model's context window, losing earlier context.
+- Sensitivity to prompt phrasing: Slight changes in wording can meaningfully alter outputs, making consistency an issue.
+- Outdated knowledge: Unless continuously updated, models have limited knowledge of events after their training cut-off (unless connected to live retrieval).
+
+Risks:
+- Bias and unfairness: Training data often contains cultural, social, and historical biases that the model can reproduce or amplify.
+- Privacy leakage: Models trained on large corpora might emit verbatim snippets from copyrighted or private sources, or potentially reveal sensitive training data.
+- Misuse: Generated content can be used to create misinformation, impersonate individuals, write malware, or produce abusive content.
+- Overreliance: Users may overly trust model outputs, not verifying factual claims or failing to apply human judgement in critical domains.
+- Legal and copyright concerns: Generated content may inadvertently reproduce copyrighted text or create derivative works with unclear licensing implications.
+
+
+
+Mitigations include human-in-the-loop verification, prompt design, fine-tuning with safety constraints, system-level filters, retrieval-augmented generation
+for factual grounding, and careful data governance.
+
+
