@@ -1,0 +1,12 @@
+class TaskManager {
+  private taskService = new TaskService();
+  private emailService = new EmailService();
+
+  createTask(name: string) {
+    this.taskService.createTask(name);
+  }
+
+  notifyUser(email: string) {
+    this.emailService.sendEmail(email);
+  }
+}
