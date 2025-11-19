@@ -1,0 +1,43 @@
+// 1. Abstraction
+interface Database {
+  save(data: string): void;
+}
+
+// 2. Low-level implementation (MySQL)
+class MySQLService implements Database {
+  save(data: string): void {
+    console.log("Saving to MySQL:", data);
+  }
+}
+
+// Example of easily adding a new DB in future
+class MongoDBService implements Database {
+  save(data: string): void {
+    console.log("Saving to MongoDB:", data);
+  }
+}
+
+// 3. High-level module depends on abstraction, not MySQLService
+class UserService {
+  private db: Database;
+
+  constructor(db: Database) {
+    this.db = db;
+  }
+
+  register(user: string): void {
+    this.db.save(user);
+  }
+}
+
+// 4. Usage
+const mysql = new MySQLService();
+const userService = new UserService(mysql);
+
+userService.register("John Doe");
+
+// Optional: Using a different DB without modifying UserService
+const mongo = new MongoDBService();
+const userServiceMongo = new UserService(mongo);
+
+userServiceMongo.register("Alice");
