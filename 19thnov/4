@@ -1,0 +1,11 @@
+interface Printer {
+  print(): void;
+}
+
+interface Scanner {
+  scan(): void;
+}
+
+interface FaxMachine {
+  fax(): void;
+}
