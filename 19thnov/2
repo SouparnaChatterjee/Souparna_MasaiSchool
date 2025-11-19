@@ -1,0 +1,54 @@
+// 1. Strategy Interface
+interface ShippingStrategy {
+  calculate(): number;
+}
+
+// 2. Concrete Strategies
+class StandardShipping implements ShippingStrategy {
+  calculate(): number {
+    return 50;
+  }
+}
+
+class ExpressShipping implements ShippingStrategy {
+  calculate(): number {
+    return 100;
+  }
+}
+
+// Example of adding new strategy (no code modification needed)
+class OvernightShipping implements ShippingStrategy {
+  calculate(): number {
+    return 200;
+  }
+}
+
+// 3. Shipping Calculator (Open for extension, Closed for modification)
+class ShippingCalculator {
+  private strategies: { [key: string]: ShippingStrategy } = {};
+
+  register(type: string, strategy: ShippingStrategy) {
+    this.strategies[type] = strategy;
+  }
+
+  calculate(type: string): number {
+    const strategy = this.strategies[type];
+    if (!strategy) {
+      throw new Error(`Unknown shipping type: ${type}`);
+    }
+    return strategy.calculate();
+  }
+}
+
+// 4. Usage Example
+const shipping = new ShippingCalculator();
+
+// Register shipping methods
+shipping.register("standard", new StandardShipping());
+shipping.register("express", new ExpressShipping());
+shipping.register("overnight", new OvernightShipping());
+
+// Test calls
+console.log(shipping.calculate("standard"));   // 50
+console.log(shipping.calculate("express"));    // 100
+console.log(shipping.calculate("overnight"));  // 200
