@@ -1,0 +1,17 @@
+class Bird {
+  eat(): void {
+    console.log("Eating...");
+  }
+}
+
+class FlyingBird extends Bird {
+  fly(): void {
+    console.log("Flying...");
+  }
+}
+
+class Sparrow extends FlyingBird {}
+
+class Ostrich extends Bird {
+  // Ostrich does NOT have fly()
+}
