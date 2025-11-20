@@ -1,0 +1,39 @@
+// Interface
+interface IVehicle {
+  start(): void;
+}
+
+// Car implementing IVehicle
+class Car implements IVehicle {
+  start(): void {
+    console.log("Car is starting");
+  }
+}
+
+// Bike implementing IVehicle
+class Bike implements IVehicle {
+  start(): void {
+    console.log("Bike is starting");
+  }
+}
+
+// Driver depends on interface, not concrete classes
+class Driver {
+  vehicle: IVehicle;
+
+  constructor(vehicle: IVehicle) {
+    this.vehicle = vehicle;
+  }
+
+  drive() {
+    this.vehicle.start();
+    console.log("Driving...");
+  }
+}
+
+// Demonstration
+const carDriver = new Driver(new Car());
+carDriver.drive();
+
+const bikeDriver = new Driver(new Bike());
+bikeDriver.drive();
