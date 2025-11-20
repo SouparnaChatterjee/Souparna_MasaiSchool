@@ -1,0 +1,53 @@
+// MediaFile interface
+interface MediaFile {
+  play(): void;
+}
+
+// AudioFile implements MediaFile
+class AudioFile implements MediaFile {
+  play(): void {
+    console.log("Playing audio file...");
+  }
+}
+
+// VideoFile implements MediaFile
+class VideoFile implements MediaFile {
+  play(): void {
+    console.log("Playing video file...");
+  }
+}
+
+// PDFFile implements MediaFile
+class PDFFile implements MediaFile {
+  play(): void {
+    console.log("Displaying PDF document...");
+  }
+}
+
+// MediaPlayer is loosely coupled with MediaFile interface
+class MediaPlayer {
+  private file: MediaFile;
+
+  constructor(file: MediaFile) {
+    this.file = file;
+  }
+
+  playMedia(): void {
+    this.file.play();
+  }
+
+  setMedia(file: MediaFile): void {
+    this.file = file;
+  }
+}
+
+// -------- Demonstration --------
+
+const player = new MediaPlayer(new AudioFile());
+player.playMedia(); // Playing audio file...
+
+player.setMedia(new VideoFile());
+player.playMedia(); // Playing video file...
+
+player.setMedia(new PDFFile());
+player.playMedia(); // Displaying PDF document...
