@@ -1,0 +1,97 @@
+#include <iostream>
+using namespace std;
+
+class SmartLight;
+
+// ----------------- State Interface -----------------
+class State {
+public:
+    virtual void turnOn(SmartLight* light) = 0;
+    virtual void turnOff(SmartLight* light) = 0;
+    virtual void detectMotion(SmartLight* light) = 0;
+    virtual void adjustBrightness(SmartLight* light, bool isDayTime) = 0;
+    virtual string getName() = 0;
+    virtual ~State() {}
+};
+
+// ----------------- Concrete States -----------------
+
+class OffState : public State {
+public:
+    void turnOn(SmartLight* light) override;
+    void turnOff(SmartLight*) override {
+        cout << "Light already OFF." << endl;
+    }
+    void detectMotion(SmartLight* light) override;
+    void adjustBrightness(SmartLight*, bool) override {
+        cout << "Cannot adjust brightness. Light is OFF!" << endl;
+    }
+    string getName() override { return "OFF"; }
+};
+
+class OnState : public State {
+public:
+    void turnOn(SmartLight*) override {
+        cout << "Light already ON." << endl;
+    }
+    void turnOff(SmartLight* light) override;
+    void detectMotion(SmartLight* light) override;
+    void adjustBrightness(SmartLight* light, bool isDayTime) override;
+
+    string getName() override { return "ON"; }
+};
+
+class MotionDetectionState : public State {
+public:
+    void turnOn(SmartLight*) override {
+        cout << "Light is ON due to motion." << endl;
+    }
+    void turnOff(SmartLight* light) override;
+    void detectMotion(SmartLight*) override {
+        cout << "Already in Motion Detection mode." << endl;
+    }
+    void adjustBrightness(SmartLight* light, bool isDayTime) override;
+
+    string getName() override { return "MOTION DETECTION"; }
+};
+
+class BrightnessAdjustmentState : public State {
+public:
+    void turnOn(SmartLight*) override {
+        cout << "Adjusting brightness, already ON." << endl;
+    }
+    void turnOff(SmartLight* light) override;
+    void detectMotion(SmartLight* light) override {
+        cout << "Motion detected during brightness adjustment." << endl;
+        light->setState(light->getMotionState());
+    }
+    void adjustBrightness(SmartLight*, bool) override {
+        cout << "Already adjusting brightness." << endl;
+    }
+    string getName() override { return "BRIGHTNESS ADJUSTMENT"; }
+};
+
+// ----------------- Context Class -----------------
+class SmartLight {
+private:
+    State* offState;
+    State* onState;
+    State* motionState;
+    State* brightnessState;
+
+    State* currentState;
+
+public:
+    SmartLight() {
+        offState = new OffState();
+        onState = new OnState();
+        motionState = new MotionDetectionState();
+        brightnessState = new BrightnessAdjustmentState();
+
+        currentState = offState;  // Initial State
+    }
+
+    void setState(State* state) { currentState = state; }
+
+    State* getOffState() { return offState; }
+    State* get*
