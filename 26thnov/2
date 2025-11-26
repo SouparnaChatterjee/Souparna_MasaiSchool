@@ -1,0 +1,102 @@
+#include <iostream>
+using namespace std;
+
+// Forward declaration
+class TrafficLight;
+
+// ---------- State Interface ----------
+class State {
+public:
+    virtual void handle(TrafficLight* light) = 0;
+    virtual string getStateName() = 0;
+    virtual ~State() {}
+};
+
+// ---------- Concrete States ----------
+
+class RedState : public State {
+public:
+    void handle(TrafficLight* light) override;
+    string getStateName() override {
+        return "RED - Vehicles must STOP";
+    }
+};
+
+class GreenState : public State {
+public:
+    void handle(TrafficLight* light) override;
+    string getStateName() override {
+        return "GREEN - Vehicles can MOVE";
+    }
+};
+
+class YellowState : public State {
+public:
+    void handle(TrafficLight* light) override;
+    string getStateName() override {
+        return "YELLOW - Vehicles should SLOW DOWN";
+    }
+};
+
+// ---------- Context Class ----------
+class TrafficLight {
+private:
+    State* redState;
+    State* greenState;
+    State* yellowState;
+    State* currentState;
+
+public:
+    TrafficLight() {
+        redState = new RedState();
+        greenState = new GreenState();
+        yellowState = new YellowState();
+        currentState = redState; // Starts at RED
+    }
+
+    void setState(State* state) { currentState = state; }
+
+    State* getRedState() { return redState; }
+    State* getGreenState() { return greenState; }
+    State* getYellowState() { return yellowState; }
+
+    void change() {
+        cout << currentState->getStateName() << endl;
+        currentState->handle(this);
+    }
+
+    ~TrafficLight() {
+        delete redState;
+        delete greenState;
+        delete yellowState;
+    }
+};
+
+// ---------- State Transitions ----------
+
+void RedState::handle(TrafficLight* light) {
+    cout << "Changing from RED → GREEN\n" << endl;
+    light->setState(light->getGreenState());
+}
+
+void GreenState::handle(TrafficLight* light) {
+    cout << "Changing from GREEN → YELLOW\n" << endl;
+    light->setState(light->getYellowState());
+}
+
+void YellowState::handle(TrafficLight* light) {
+    cout << "Changing from YELLOW → RED\n" << endl;
+    light->setState(light->getRedState());
+}
+
+// ---------- Example Run ----------
+int main() {
+    TrafficLight light;
+
+    // Simulating 6 cycles
+    for(int i = 0; i < 6; i++) {
+        light.change();
+    }
+
+    return 0;
+}
