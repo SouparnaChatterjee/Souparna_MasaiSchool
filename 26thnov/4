@@ -1,0 +1,138 @@
+#include <iostream>
+using namespace std;
+
+class ATM;
+
+// ---------------- State Interface ----------------
+class State {
+public:
+    virtual void insertCard(ATM* atm) = 0;
+    virtual void enterPin(ATM* atm, int pin) = 0;
+    virtual void withdrawCash(ATM* atm) = 0;
+    virtual void dispenseCash(ATM* atm) = 0;
+    virtual string getName() = 0;
+    virtual ~State() {}
+};
+
+// ---------------- ATM States ----------------
+
+class IdleState : public State {
+public:
+    void insertCard(ATM* atm) override;
+    void enterPin(ATM*, int) override {
+        cout << "Insert card first!" << endl;
+    }
+    void withdrawCash(ATM*) override {
+        cout << "Insert card first!" << endl;
+    }
+    void dispenseCash(ATM*) override {
+        cout << "Insert card first!" << endl;
+    }
+    string getName() override { return "IDLE"; }
+};
+
+class CardInsertedState : public State {
+public:
+    void insertCard(ATM*) override {
+        cout << "Card already inserted!" << endl;
+    }
+    void enterPin(ATM* atm, int pin) override;
+    void withdrawCash(ATM*) override {
+        cout << "Enter PIN first!" << endl;
+    }
+    void dispenseCash(ATM*) override {
+        cout << "Enter PIN first!" << endl;
+    }
+    string getName() override { return "CARD INSERTED"; }
+};
+
+class AuthenticatedState : public State {
+public:
+    void insertCard(ATM*) override {
+        cout << "Card already inserted!" << endl;
+    }
+    void enterPin(ATM*, int) override {
+        cout << "Already authenticated!" << endl;
+    }
+    void withdrawCash(ATM* atm) override;
+    void dispenseCash(ATM*) override {
+        cout << "Select withdraw first!" << endl;
+    }
+    string getName() override { return "AUTHENTICATED"; }
+};
+
+class DispensingCashState : public State {
+public:
+    void insertCard(ATM*) override {
+        cout << "Currently dispensing cash. Wait!" << endl;
+    }
+    void enterPin(ATM*, int) override {
+        cout << "Already processing transaction!" << endl;
+    }
+    void withdrawCash(ATM*) override {
+        cout << "Already dispensing!" << endl;
+    }
+    void dispenseCash(ATM* atm) override;
+    string getName() override { return "DISPENSING CASH"; }
+};
+
+// ---------------- ATM Context Class ----------------
+class ATM {
+private:
+    State* idleState;
+    State* cardInsertedState;
+    State* authenticatedState;
+    State* dispensingCashState;
+
+    State* currentState;
+
+public:
+    ATM() {
+        idleState = new IdleState();
+        cardInsertedState = new CardInsertedState();
+        authenticatedState = new AuthenticatedState();
+        dispensingCashState = new DispensingCashState();
+
+        currentState = idleState;   // Initial state
+    }
+
+    // State setters
+    void setState(State* state) { currentState = state; }
+
+    // Getters
+    State* getIdleState() { return idleState; }
+    State* getCardInsertedState() { return cardInsertedState; }
+    State* getAuthenticatedState() { return authenticatedState; }
+    State* getDispensingCashState() { return dispensingCashState; }
+
+    // User actions
+    void insertCard() {
+        cout << "\nAction: INSERT CARD" << endl;
+        currentState->insertCard(this);
+        cout << "ATM State: " << currentState->getName() << "\n";
+    }
+    void enterPin(int pin) {
+        cout << "\nAction: ENTER PIN" << endl;
+        currentState->enterPin(this, pin);
+        cout << "ATM State: " << currentState->getName() << "\n";
+    }
+    void withdrawCash() {
+        cout << "\nAction: WITHDRAW CASH" << endl;
+        currentState->withdrawCash(this);
+        cout << "ATM State: " << currentState->getName() << "\n";
+    }
+    void dispenseCash() {
+        cout << "\nAction: DISPENSE CASH" << endl;
+        currentState->dispenseCash(this);
+        cout << "ATM State: " << currentState->getName() << "\n";
+    }
+
+    ~ATM() {
+        delete idleState;
+        delete cardInsertedState;
+        delete authenticatedState;
+        delete dispensingCashState;
+    }
+};
+
+/
