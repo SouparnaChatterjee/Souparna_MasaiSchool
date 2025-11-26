@@ -1,0 +1,90 @@
+#include <iostream>
+using namespace std;
+
+// Forward declaration
+class MediaPlayer;
+
+// ----------- State Interface -----------
+class State {
+public:
+    virtual void play(MediaPlayer* player) = 0;
+    virtual void pause(MediaPlayer* player) = 0;
+    virtual void stop(MediaPlayer* player) = 0;
+    virtual string getName() = 0;
+    virtual ~State() {}
+};
+
+// ----------- Concrete States -----------
+
+class PlayState : public State {
+public:
+    void play(MediaPlayer* player) override {
+        cout << "Already playing!" << endl;
+    }
+
+    void pause(MediaPlayer* player) override;
+
+    void stop(MediaPlayer* player) override;
+
+    string getName() override {
+        return "PLAYING";
+    }
+};
+
+class PauseState : public State {
+public:
+    void play(MediaPlayer* player) override;
+
+    void pause(MediaPlayer* player) override {
+        cout << "Already paused." << endl;
+    }
+
+    void stop(MediaPlayer* player) override;
+
+    string getName() override {
+        return "PAUSED";
+    }
+};
+
+class StopState : public State {
+public:
+    void play(MediaPlayer* player) override;
+
+    void pause(MediaPlayer* player) override {
+        cout << "Cannot pause. Media is stopped!" << endl;
+    }
+
+    void stop(MediaPlayer* player) override {
+        cout << "Already stopped." << endl;
+    }
+
+    string getName() override {
+        return "STOPPED";
+    }
+};
+
+// ------------ MediaPlayer (Context) ------------
+
+class MediaPlayer {
+private:
+    State* playState;
+    State* pauseState;
+    State* stopState;
+
+    State* currentState;
+
+public:
+    MediaPlayer() {
+        playState = new PlayState();
+        pauseState = new PauseState();
+        stopState = new StopState();
+
+        currentState = stopState; // Starts stopped
+    }
+
+    void setState(State* state) {
+        currentState = state;
+    }
+
+    // Getters
+    State* getPla*
