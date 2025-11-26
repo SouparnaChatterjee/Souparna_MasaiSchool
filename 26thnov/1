@@ -1,0 +1,114 @@
+#include <iostream>
+using namespace std;
+
+// Forward declaration
+class VendingMachine;
+
+// ----------- State Interface -----------
+class State {
+public:
+    virtual void insertCoin(VendingMachine* machine) = 0;
+    virtual void selectItem(VendingMachine* machine) = 0;
+    virtual void dispense(VendingMachine* machine) = 0;
+    virtual ~State() {}
+};
+
+// ----------- Concrete States -----------
+
+class IdleState : public State {
+public:
+    void insertCoin(VendingMachine* machine) override;
+    void selectItem(VendingMachine* machine) override {
+        cout << "Insert coin first!" << endl;
+    }
+    void dispense(VendingMachine* machine) override {
+        cout << "Cannot dispense. No item selected!" << endl;
+    }
+};
+
+class ProcessingState : public State {
+public:
+    void insertCoin(VendingMachine* machine) override {
+        cout << "Coin already inserted!" << endl;
+    }
+    void selectItem(VendingMachine* machine) override;
+    void dispense(VendingMachine* machine) override {
+        cout << "Select an item first!" << endl;
+    }
+};
+
+class DispensingState : public State {
+public:
+    void insertCoin(VendingMachine* machine) override {
+        cout << "Wait! Dispensing in progress." << endl;
+    }
+    void selectItem(VendingMachine* machine) override {
+        cout << "Already selected!" << endl;
+    }
+    void dispense(VendingMachine* machine) override;
+};
+
+// ----------- Context Class -----------
+class VendingMachine {
+private:
+    State* idleState;
+    State* processingState;
+    State* dispensingState;
+    State* currentState;
+
+public:
+    VendingMachine() {
+        idleState = new IdleState();
+        processingState = new ProcessingState();
+        dispensingState = new DispensingState();
+        currentState = idleState; // starting state
+    }
+
+    // State Setters
+    void setState(State* state) { currentState = state; }
+
+    // Getters for states
+    State* getIdleState() { return idleState; }
+    State* getProcessingState() { return processingState; }
+    State* getDispensingState() { return dispensingState; }
+
+    // User actions
+    void insertCoin() { currentState->insertCoin(this); }
+    void selectItem() { currentState->selectItem(this); }
+    void dispense()    { currentState->dispense(this); }
+
+    ~VendingMachine() {
+        delete idleState;
+        delete processingState;
+        delete dispensingState;
+    }
+};
+
+// ----------- State Behaviors -----------
+
+void IdleState::insertCoin(VendingMachine* machine) {
+    cout << "Coin inserted. Moving to Processing state." << endl;
+    machine->setState(machine->getProcessingState());
+}
+
+void ProcessingState::selectItem(VendingMachine* machine) {
+    cout << "Item selected. Moving to Dispensing state." << endl;
+    machine->setState(machine->getDispensingState());
+}
+
+void DispensingState::dispense(VendingMachine* machine) {
+    cout << "Dispensing item..." << endl;
+    cout << "Returning to Idle state." << endl;
+    machine->setState(machine->getIdleState());
+}
+
+// ----------- Main (Example Run) -----------
+int main() {
+    VendingMachine machine;
+
+    machine.insertCoin();
+    machine.selectItem();
+    machine.dispense();
+
+    return 0;
+}
